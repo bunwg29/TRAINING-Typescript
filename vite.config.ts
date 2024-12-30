@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 
    base: '/',
-   root: 'src',
+   root: '.',
    build: {
       target: "esnext",
       outDir: '../dist'
