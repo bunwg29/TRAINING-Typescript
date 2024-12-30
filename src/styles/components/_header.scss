@@ -1,0 +1,37 @@
+@use '../abstracts/' as *;
+@use '../base/' as *;
+header {
+
+  color: $tcl-first;
+  @include flexStyle(none, none, column);
+  gap: 1em;
+
+  .heading {
+    @include font-heading();
+  }
+
+  .navigation {
+    @include flexStyle(space-between, none, row);
+
+    nav {
+      @include flexStyle(space-between, none, row);
+      @include font($primary-font, $fs-medium, $fw-second);
+      gap: 1em;
+      .nav-item {
+        color: $tcl-first;
+        text-decoration: none;
+      }
+    }
+
+    .amount {
+      @include font($primary-font, $fs-medium, $fw-second);
+      p {
+        span {
+          @include font-heading();
+          color: $bgcl-buttonPay;
+        }
+      }
+    }
+  }
+
+}
