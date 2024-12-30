@@ -1,0 +1,65 @@
+@mixin flexStyle($justify, $align, $direction) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+}
+
+// Mixin for flex items
+@mixin flex-item($flex) {
+  flex: $flex;
+}
+
+// Mixin for status style
+@mixin status-style($bg-color, $text-color, $width) {
+  @include flexStyle(left, center, row);
+  gap: 3px;
+  width: $width;
+  background-color: $bg-color;
+  padding: 2px;
+  border-radius: 10px;
+  @include font-status;
+  color: $text-color;
+}
+
+// Mixin for setting padding
+@mixin padding($top, $right: $top, $bottom: $top, $left: $right) {
+  padding: $top $right $bottom $left;
+}
+
+// Mixin for setting border-radius
+@mixin border-radius($radius) {
+  border-radius: $radius;
+}
+
+// Mixin for setting box-shadow
+@mixin box-shadow($x, $y, $blur, $spread, $color) {
+  box-shadow: $x $y $blur $spread $color;
+}
+
+// Mixin for setting background and color
+@mixin bg-color($bg-color, $text-color: inherit) {
+  background-color: $bg-color;
+  color: $text-color;
+}
+
+// Mixin for setting position
+@mixin position(
+  $position,
+  $top: null,
+  $right: null,
+  $bottom: null,
+  $left: null
+) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Mixin for setting width and height
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}

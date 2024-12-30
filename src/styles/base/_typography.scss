@@ -1,0 +1,30 @@
+@use '../abstracts/' as *;
+
+@font-face {
+  font-family: InterRegular;
+  src: url('@/assets/fonts/Inter-Regular.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: InterBold;
+  src: url('@/assets/fonts/Inter-Bold.ttf') format(truetype);
+}
+
+@mixin font($font-family, $font-size, $font-weight) {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: normal;
+}
+
+@mixin font-heading() {
+  @include font($second-font, $fs-medium, $fw-heading);
+}
+
+@mixin font-description() {
+  @include font($primary-font, $fs-medium, $fw-first);
+}
+
+@mixin font-status() {
+  @include font($primary-font, $fs-small, $fw-second);
+}
