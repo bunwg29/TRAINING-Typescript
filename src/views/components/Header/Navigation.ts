@@ -6,7 +6,7 @@ export class Navigation {
   DOM = new DOM();
   constructor() {}
 
-  private NavigationContent() {
+  private NavigationContent(): HTMLElement {
     const nav = document.createElement('nav');
     NAV_CONTENT.forEach(item => {
       nav.appendChild(this.DOM.a(item.href, 'nav-item', item.title));
@@ -14,14 +14,14 @@ export class Navigation {
     return nav;
   }
 
-  private divNav() {
+  private divNav(): HTMLElement {
     const div = this.DOM.div('navigation');
     div.appendChild(this.NavigationContent());
     div.appendChild(new Amount(900).render());
     return div;
   }
 
-  public render() {
+  public render(): HTMLElement {
     return this.divNav();
   }
 }

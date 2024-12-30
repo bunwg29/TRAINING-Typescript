@@ -5,17 +5,21 @@ export class Heading {
 
   private title: string;
 
+  /**
+   * 
+   * @param title -heading of data table
+   */
   constructor(title: string) {
     this.title = title;
   }
 
-  private HeadingContent() {
+  private HeadingContent(): HTMLElement {
     const div = this.DOM.div('heading');
     div.appendChild(this.DOM.p(this.title));
     return div;
   }
 
-  public render() {
+  public render(): HTMLElement {
     return this.HeadingContent();
   }
 }

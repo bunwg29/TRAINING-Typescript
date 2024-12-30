@@ -5,7 +5,7 @@ type navigationContent = {
 
 export const NAV_CONTENT: navigationContent[] = [
   {
-    href: '/all',
+    href: '/',
     title: 'All',
   },
   {
