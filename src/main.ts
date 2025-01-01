@@ -1,8 +1,6 @@
 import './styles/index.scss';
-import * as views from './views/index';
+import { Router } from './routers/Router';
+new Router();
 
 
-const root = document.getElementById('app');
-if (root) {
-	root.appendChild(new views.Header().render())
-}
+

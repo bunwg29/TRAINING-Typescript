@@ -1,5 +1,5 @@
 import { Header } from '../components';
-import { TableOption } from '../components/Table/TableHeading/TableOption';
+import { TableOption } from '../components/Table/TableOption/TableOption';
 
 // This class is a layout that will be used to render the default layout of the application.
 export class Default {
@@ -10,7 +10,7 @@ export class Default {
    * @param component - This is HTML Element that will be wrapped in a div with the class name 'component'.
    * @returns {HTMLElement} - Returns a div element with the class name 'component'.
    */
-  private divComponent(component: HTMLElement) {
+  private divComponent(component: HTMLElement): HTMLElement {
     const div = document.createElement('div');
     div.className = 'component';
     div.replaceChildren(component);

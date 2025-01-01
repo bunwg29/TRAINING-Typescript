@@ -19,6 +19,20 @@ export class DOM {
     return p;
   }
 
+  public tr(className: string | '') {
+    const tr = document.createElement('tr');
+    tr.className = className;
+    return tr;
+  }
+
+  public td(className: string | '') {
+    const td = document.createElement('td');
+    td.className = className;
+    return td;
+  }
+
+
+
   public className(element: HTMLElement, className: string) {
     element.className = className;
   }
