@@ -1,6 +1,6 @@
 // icons.ts
 const icons = Object.entries(
-  import.meta.glob('@/assets/icons/*.svg', { eager: true }),
+  import.meta.glob('/src/assets/icons/*.svg', { eager: true }),
 ).reduce((acc: { [key: string]: string }, [path, module]) => {
   const name = path
     .split('/')

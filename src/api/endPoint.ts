@@ -1,8 +1,8 @@
 export const endPoint = {
 
   // [GET] all user type
-  getAllUser(): string {
-    return `/user_data`;
+  getAllUser(limit?: 10): string {
+    return `/user_data?_limit=${limit}`;
   },
 
   /**
