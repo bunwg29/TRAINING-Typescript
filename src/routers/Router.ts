@@ -29,7 +29,6 @@ export class Router {
     const app = document.getElementById('app');
 
     const { childComponent } = this.getRoutes();
-    console.log(childComponent);
     app?.replaceChildren(childComponent as HTMLElement);
   }
 
@@ -58,10 +57,9 @@ export class Router {
       const { component, parentComponent } = route;
       if (route.path === urlPath) {
         const childComponent = new component().render();
-        console.log(childComponent);
         if (parentComponent) {
           return {
-            childComponent: new parentComponent().render(childComponent),
+            childComponent: new parentComponent().render(childComponent as HTMLElement),
           };
         }
         return { childComponent };
