@@ -1,5 +1,5 @@
 import { Header } from '../components';
-import { TableOption } from '../components/Table/TableOption/TableOption';
+import { TableOption } from '../components/Table/Menu/TableOption';
 
 // This class is a layout that will be used to render the default layout of the application.
 export class Default {

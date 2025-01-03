@@ -1,0 +1,54 @@
+@use "../abstracts/" as *;
+@use "../base/" as *;
+.menu {
+  @include padding(20px, 10px);
+  @include flexStyle(space-between, center, row);
+  background-color: $bgcl-item-profile;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 2px 2px 5px 0px $bs-menu;
+  margin-top: 1em;
+  & > * {
+    @include flexStyle(space-around, center, row);
+  }
+
+  &-left {
+    @include flexStyle(space-between, center, row);
+    gap: 10%;
+    width: 40%;
+
+    & > * {
+      @include flexStyle(space-between, center, row);
+      gap: 5%;
+    }
+
+    &-filter {
+      @include position(relative);
+      @include padding(2%);
+      @include border-radius(10px);
+      @include bg-color($bgcl-item-profile);
+      border: solid $bd-color;
+    }
+
+    &-search {
+      @include size(100%);
+      @include padding(2%);
+      @include border-radius(10px);
+      @include bg-color($bgcl-main);
+
+      input {
+        @include size(100%);
+        @include bg-color($bgcl-main);
+        border: none;
+        outline: none;
+      }
+    }
+  }
+
+  &-pay {
+    @include padding(1%);
+    @include font($primary-font, $fs-big, $fw-button);
+    @include border-radius(10px);
+    @include bg-color($bgcl-buttonPay, $bgcl-item-profile);
+    border: none;
+  }
+}

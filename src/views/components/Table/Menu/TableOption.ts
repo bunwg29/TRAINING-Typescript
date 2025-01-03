@@ -4,16 +4,17 @@ import { Filter } from './Filter';
 import { Input } from './Input';
 
 export class TableOption {
-  DOM = new DOM();
-  constructor() {}
+  private readonly dom: DOM;
+
+  constructor() {
+    this.dom = new DOM();
+  }
 
   private TableOption(): HTMLElement {
-    const div = this.DOM.div('table-option');
-    div.append(
-      new Filter().render(),
-      new Input().render(),
-      new Button().render()
-    );
+    const div = this.dom.div('menu');
+    const divLeft = this.dom.div('menu-left');
+    divLeft.append(new Filter().render(), new Input().render());
+    div.append(divLeft, new Button().render());
 
     return div;
   }

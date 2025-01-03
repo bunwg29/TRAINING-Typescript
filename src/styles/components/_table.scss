@@ -1,0 +1,9 @@
+@use '../abstracts/' as *;
+@use '../base/' as *;
+
+.table-data {
+  width: 100%;
+  background-color: $bgcl-item-profile;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px $bs-menu;
+}

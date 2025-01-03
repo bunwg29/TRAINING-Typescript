@@ -2,174 +2,202 @@ import { UserResponse } from '@/controllers/users.controller';
 import { Heading } from './Heading';
 import icons from '@/constant/icons';
 import { DOM } from '@/views/utils/DOM';
+import { Activity } from './Activity';
 
-/*
- * - This class will render content of table by will create method to create component of table and then combine them
- */
+type StatusType = 'active' | 'payment';
+
+interface StatusConfig {
+  className: string;
+  formatter?: (date: string) => string;
+}
+
+interface StatusConfigs {
+  [key: string]: {
+    [key: string]: StatusConfig;
+  };
+}
+
 export class TableData {
-  data: UserResponse[];
+  private readonly dom: DOM;
+  private activity: Activity;
 
-  DOM = new DOM();
-  /**
-   *
-   * @param data - data of user that defined type in UserResponse at controllers/users.controller.ts
-   */
-  constructor(data: UserResponse[]) {
-    this.data = data;
+  private readonly statusConfigs: StatusConfigs = {
+    active: {
+      Active: { className: 'info-activity__active' },
+      Inactive: { className: 'info-activity__inactive' },
+    },
+    payment: {
+      Paid: {
+        className: 'info-payment__paid',
+        formatter: (date: string) => `Paid on ${date}`,
+      },
+      Unpaid: {
+        className: 'info-payment__unpaid',
+        formatter: (date: string) => `Unpaid on ${date}`,
+      },
+      Overdue: {
+        className: 'info-payment__overdue',
+        formatter: (date: string) => `Dued on ${date}`,
+      },
+    },
+  };
+
+  constructor(private readonly data: UserResponse[]) {
+    this.dom = new DOM();
+    this.activity = new Activity();
   }
 
-  /**
-   *
-   * @returns - table element that contain all of the user data
-   */
-  public createTable() {
-    const table = document.createElement('table');
-    table.classList.add('user-table');
-
-    table.appendChild(new Heading().render());
-
-    // Create body rows
-    const tbody = this.createTableBody();
-    table.appendChild(tbody);
-
-    return table;
+  public createTable(): HTMLElement {
+    const container = this.dom.div('table-data');
+    container.appendChild(new Heading().render());
+    container.appendChild(this.createTableBody());
+    return container;
   }
 
-  /**
-   * - This will create a div that contains two p elements, purpose of this method is easier style the content
-   * @param className -This is class name of div
-   * @param firstContent - This is content of first p element
-   * @param secondContent - This is content of second p element
-   * @returns
-   */
-  private createDoubleDiv(
-    className: string,
-    firstContent: string,
-    secondContent: string,
-  ): HTMLElement {
-    const div = this.DOM.div(className);
-    const p1 = this.DOM.p(firstContent);
-    const p2 = this.DOM.p(secondContent);
-    div.append(p1, p2);
-
-    return div;
+  private createTableBody(): HTMLElement {
+    const usersContainer = this.dom.div('user');
+    this.data.forEach(user => {
+      usersContainer.appendChild(this.createUserRow(user));
+    });
+    return usersContainer;
   }
 
-  /**
-   * - This will create a div that contains two img elements, purpose of this method is easier style the content
-   * @param className -This is class name of div
-   * @param firstSrc - This is src of first img element
-   * @param secondSrc - This is src of second img element
-   * @returns
-   */
-  private createIcon(
-    className: string,
-    firstSrc: string,
-    secondSrc: string,
-  ): HTMLElement {
-    const div = this.DOM.div(className);
-    const firstImg = document.createElement('img');
-    const secondImg = document.createElement('img');
+  private createUserRow(user: UserResponse): HTMLElement {
+    const listUser = this.dom.div('list-user');
+    const userInfo = this.dom.div('info');
 
-    firstImg.src = firstSrc;
-    secondImg.src = secondSrc;
+    const elements = [
+      this.createCheckbox(),
+      this.createShowInfoButton(),
+      this.createUserInfoSection(user),
+      this.createActivitySection(user),
+      this.createPaymentSection(user),
+      this.createAmountSection(user),
+      this.createViewMoreButton(),
+      this.createAdditionSection(),
+    ];
 
-    div.append(firstImg, secondImg);
-    return div;
+    elements.forEach(element => userInfo.appendChild(element));
+    listUser.appendChild(userInfo);
+    listUser.appendChild(this.activity.render(user.activity));
+    return listUser;
   }
 
-  /**
-   * - This is also like createDoubleDiv but have some logic to add content before secondContent params
-   * @param className
-   * @param firstContent
-   * @param secondContent
-   * @returns
-   */
+  private createCheckbox(): HTMLElement {
+    const checkbox = document.createElement('a');
+    checkbox.className = 'checkbox';
+    checkbox.appendChild(this.dom.img('', icons.userNonCheckbox));
+    return checkbox;
+  }
+
+  private createShowInfoButton(): HTMLElement {
+    const showInfo = document.createElement('a');
+    showInfo.className = 'showinfo';
+    showInfo.appendChild(this.dom.img('', icons.showProfile));
+    return showInfo;
+  }
+
+  private createUserInfoSection(user: UserResponse): HTMLElement {
+    const container = this.dom.div('info-name');
+
+    const name = this.dom.div('info-name__firstname');
+    name.textContent = `${user.firstname} ${user.lastname}`;
+
+    const email = this.dom.div('info-name__email');
+    email.textContent = user.email;
+
+    container.append(name, email);
+    return container;
+  }
+
+  private getStatusConfig(type: StatusType, status: string): StatusConfig {
+    return (
+      this.statusConfigs[type]?.[status] || {
+        className: `info-${type}__null`,
+      }
+    );
+  }
+
+  private createActivitySection(user: UserResponse): HTMLElement {
+    const container = this.dom.div('info-activity');
+
+    const statusConfig = this.getStatusConfig('active', user.active_status);
+    const activeStatus = this.createStatusElement(
+      statusConfig.className,
+      user.active_status,
+    );
+
+    const loginInfo = this.dom.div('info-activity__login');
+    loginInfo.appendChild(this.dom.p(`Last login: ${user.last_login}`));
+
+    container.append(activeStatus, loginInfo);
+    return container;
+  }
+
+  private createPaymentSection(user: UserResponse): HTMLElement {
+    const container = this.dom.div('info-payment');
+
+    const statusConfig = this.getStatusConfig('payment', user.paid_status);
+    const paidStatus = this.createStatusElement(
+      statusConfig.className,
+      user.paid_status,
+    );
+
+    const paymentDay = this.createPaymentStatus(
+      'info-payment__day',
+      user.paid_status,
+      user.paid_day,
+    );
+
+    container.append(paidStatus, paymentDay);
+    return container;
+  }
+
+  private createAmountSection(user: UserResponse): HTMLElement {
+    const container = this.dom.div('info-amount');
+
+    const amount = document.createElement('span');
+    amount.className = 'info-amount__money';
+    amount.textContent = user.amount;
+
+    const currency = this.dom.p('USD');
+
+    container.append(amount, currency);
+    return container;
+  }
+
+  private createViewMoreButton(): HTMLElement {
+    return this.dom.button('button-viewmore', 'View more');
+  }
+
+  private createAdditionSection(): HTMLElement {
+    const container = this.dom.div('addition');
+    const link = document.createElement('a');
+    link.className = 'viewmore';
+    link.appendChild(this.dom.img('', icons.viewMoreOption));
+    container.appendChild(link);
+    return container;
+  }
+
+  private createStatusElement(className: string, status: string): HTMLElement {
+    const container = this.dom.div(className);
+
+    const statusDot = document.createElement('span');
+    statusDot.className = 'status-dot';
+    statusDot.textContent = '•';
+
+    container.append(statusDot, ` ${status}`);
+    return container;
+  }
+
   private createPaymentStatus(
     className: string,
-    firstContent: string,
-    secondContent: string,
+    status: string,
+    date: string,
   ): HTMLElement {
-    const div = this.DOM.div(className);
-
-    const formattedContent =
-      firstContent === 'Paid'
-        ? `Paid on ${secondContent}`
-        : firstContent === 'Overdue'
-          ? `Dued on ${secondContent}`
-          : firstContent === 'Unpaid'
-            ? `Unpaid on ${secondContent}`
-            : '';
-    const p1 = this.DOM.p(firstContent);
-    const p2 = this.DOM.p(formattedContent);
-    div.append(p1, p2);
-
-    return div;
-  }
-
-  /**
-   *
-   * @returns - This will create a table body that contain all of the user data
-   */
-  private createTableBody() {
-    const tbody = document.createElement('tbody');
-
-    this.data.forEach((user: UserResponse) => {
-      const row = document.createElement('tr');
-      row.appendChild(
-        this.createCell(
-          this.createIcon('td-icon', icons.userNonCheckbox, icons.showProfile),
-        ),
-      );
-      row.appendChild(
-        this.createCell(
-          this.createDoubleDiv(
-            'td-name',
-            user.firstname + ' ' + user.lastname,
-            user.email,
-          ),
-        ),
-      );
-      row.appendChild(
-        this.createCell(
-          this.createDoubleDiv(
-            'td-user-status',
-            user.active_status,
-            user.last_login,
-          ),
-        ),
-      );
-      row.appendChild(
-        this.createCell(
-          this.createPaymentStatus(
-            'td-paid-status',
-            user.paid_status,
-            user.paid_day,
-          ),
-        ),
-      );
-      row.appendChild(
-        this.createCell(this.createDoubleDiv('td-amount', user.amount, 'USD')),
-      );
-
-      row.appendChild(this.createCell(this.DOM.button('td-button-view', 'View More')));
-      const editButton = this.DOM.button('td-button-edit', '');
-      editButton.appendChild(this.DOM.img('', icons.viewMoreOption));
-      row.appendChild(this.createCell(editButton));
-      tbody.appendChild(row);
-    });
-
-    return tbody;
-  }
-
-  /**
-   * - This will create a cell that contain content
-   * @param content - This is content that will be append to cell
-   * @returns
-   */
-  private createCell(content: HTMLElement) {
-    const cell = document.createElement('td');
-    cell.append(content);
-    return cell;
+    const container = this.dom.div(className);
+    const statusConfig = this.getStatusConfig('payment', status);
+    container.textContent = statusConfig.formatter?.(date) || '';
+    return container;
   }
 }

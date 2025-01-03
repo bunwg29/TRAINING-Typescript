@@ -1,0 +1,19 @@
+@use "../abstracts/" as *;
+@use "../base/" as *;
+
+.table-title {
+  @include flexStyle(none, center, row);
+  @include padding(10px);
+  @include bg-color($bgcl-main);
+
+  & > * {
+    @include font($primary-font, $fs-small, $fw-button);
+    color: $tcl-first;
+  }
+
+  .checkboxMenu { flex: 0.1; }
+  .name { flex: 0.2; }
+  .status { flex: 0.37; }
+  .paymentStatus { flex: 0.25; }
+  .amount { flex: 0.15; }
+}

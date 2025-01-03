@@ -1,56 +1,91 @@
-const heading = ['NAME', 'USER STATUS', 'PAYMENT STATUS', 'AMOUNT'];
 import icons from '@/constant/icons';
 import { DOM } from '@/views/utils/DOM';
 
-export class Heading {
-  DOM = new DOM();
-  constructor() {}
+interface HeaderItem {
+  className: string;
+  content: string;
+}
 
-  /**
-   *
-   * @param content - The content of the table header cell
-   * @returns - The table header cell element
-   */
-  private createTableHeaderCell(content: string): HTMLTableCellElement {
-    const th = document.createElement('th');
-    th.textContent = content;
-    return th;
+const HEADER_ITEMS: HeaderItem[] = [
+  {
+    className: 'name',
+    content: 'NAME',
+  },
+  {
+    className: 'status',
+    content: 'USER STATUS',
+  },
+  {
+    className: 'paymentStatus',
+    content: 'PAYMENT STATUS',
+  },
+  {
+    className: 'amount',
+    content: 'AMOUNT',
+  },
+];
+
+export class Heading {
+  private readonly dom: DOM;
+
+  constructor() {
+    this.dom = new DOM();
   }
 
   /**
-   *
-   * @returns - The table header element
+   * Creates and returns the checkbox element for the header
+   */
+  private createCheckbox(): HTMLElement {
+    const checkbox = this.dom.a('', 'checkboxMenu', '');
+    const checkboxIcon = this.dom.img(
+      'table-title-checkbox',
+      icons.userNonCheckbox,
+    );
+    checkbox.appendChild(checkboxIcon);
+    return checkbox;
+  }
+
+  /**
+   * Creates and returns the options element for the header
+   */
+  private createOptions(): HTMLElement {
+    const options = this.dom.p('');
+    const optionsIcon = this.dom.img('viewMoreOption', icons.viewMoreOption);
+    options.appendChild(optionsIcon);
+    return options;
+  }
+
+  /**
+   * Creates header items from the HEADER_ITEMS configuration
+   */
+  private createHeaderItems(): HTMLElement[] {
+    return HEADER_ITEMS.map(({ className, content }) => {
+      const headerItem = this.dom.p(content);
+      headerItem.className = className;
+      return headerItem;
+    });
+  }
+
+  /**
+   * Creates the complete header content
    */
   private createHeaderContent(): HTMLElement {
-    const thead = document.createElement('thead');
-    const headerRow = document.createElement('tr');
-    headerRow.className = 'table-heading';
+    const tableTitle = this.dom.div('table-title');
 
-    // Icon header
-    headerRow.appendChild(
-      this.DOM.th(this.DOM.img('table-heading-img', icons.userNonCheckbox)),
-    );
+    const elements = [
+      this.createCheckbox(),
+      ...this.createHeaderItems(),
+      this.createOptions(),
+    ];
 
-    // Table headers
-    heading.forEach(head => {
-      const th = this.createTableHeaderCell(head);
-      headerRow.appendChild(th);
-    });
+    elements.forEach(element => tableTitle.appendChild(element));
 
-    // Edit button
-    const editButton = this.DOM.button('td-button-edit', '');
-    editButton.appendChild(
-      this.DOM.img('td-button-edit-img', icons.viewMoreOption),
-    );
-    headerRow.appendChild(this.DOM.th(editButton));
-
-    thead.appendChild(headerRow);
-    return thead;
+    return tableTitle;
   }
 
   /**
-   *
-   * @returns - The table header element
+   * Renders the header component
+   * @returns The complete header element
    */
   public render(): HTMLElement {
     return this.createHeaderContent();
