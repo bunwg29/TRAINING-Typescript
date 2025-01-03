@@ -1,6 +1,6 @@
 import { endPoint } from '../api/endPoint';
 import { instanceAxios } from '../api/setup';
-import { activityType, UsersModel } from '../models/Users.model';
+import { activityType, UsersModel } from '../models/users.model';
 
 export interface UserResponse {
   id: number

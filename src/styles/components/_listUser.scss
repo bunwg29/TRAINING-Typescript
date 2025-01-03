@@ -1,0 +1,148 @@
+@use "../base" as *;
+@use '../abstracts/' as *;
+.user {
+  .list-user {
+    border-top: solid 1px $bd-user;
+    padding: 0 10px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $bgcl-main;
+    }
+
+    .info {
+      @include flexStyle(none, center, row);
+      padding: 10px 0;
+
+      @mixin flex-item($flex) {
+        flex: $flex;
+      }
+
+      .checkbox, .showinfo { @include flex-item(0.06); }
+      .info-name { @include flex-item(0.25); }
+      .info-activity { @include flex-item(0.46); }
+      .info-payment { @include flex-item(0.33); }
+      .info-amount { @include flex-item(0.06); }
+      .button-viewmore { @include flex-item(0.08); }
+
+      .info-name {
+        @include flexStyle(center, left, column);
+        gap: 5px;
+
+        &__firstname {
+          @include font($primary-font, $fs-medium, $fw-second);
+          color: $tcl-second;
+        }
+
+        &__email {
+          @include font($primary-font, $fs-medium, $fw-first);
+          color: $tcl-first;
+        }
+      }
+
+      @mixin status-style($bg-color, $text-color, $width) {
+        @include flexStyle(left, center, row);
+        gap: 3px;
+        width: $width;
+        background-color: $bg-color;
+        padding: 2px;
+        border-radius: 10px;
+        @include font-status();
+        color: $text-color;
+      }
+
+      .info-activity, .info-payment {
+        &__active { @include status-style($bgcl-activeStatus, $tcl-active-status, 15%); }
+        &__inactive { @include status-style($bgcl-activeStatus, $tcl-first, 15%); }
+        &__paid { @include status-style($bgcl-paidStatus, $tcl-paid-status, 15%); }
+        &__unpaid { @include status-style($bgcl-unpaidStatus, $tcl-unpaid-status, 20%); }
+        &__overdue { @include status-style($bgcl-overdueStatus, $tcl-overdue-status, 23%); }
+
+        .status-dot {
+          @include flexStyle(none, center, column);
+          font-size: 15px;
+        }
+
+        &__login p, &__day {
+          @include font-status();
+          color: $tcl-first;
+        }
+      }
+
+      .info-amount {
+        &__money {
+          @include font($primary-font, $fs-medium, $fw-second);
+        }
+        p {
+          @include font($primary-font, $fs-medium, $fw-first);
+          color: $tcl-first;
+        }
+      }
+
+      .button-viewmore {
+        color: $tcl-first;
+        border: none;
+        background-color: transparent;
+      }
+    }
+
+    .addition {
+      position: relative;
+    }
+  }
+
+  .activity {
+    display: none;
+    background-color: #fff;
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    &-header, &-info {
+      display: grid;
+      grid-template-columns: 100px 1fr 2fr;
+      padding: 15px;
+      font-size: 0.9em;
+    }
+
+    &-header {
+      background-color: $bgcl-inactiveStatus;
+      color: $tcl-first;
+      @include font($primary-font, $fs-small, $fw-button);
+
+      div:last-child {
+        display: flex;
+        align-items: center;
+
+        &::after {
+          content: 'i';
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-color: #ccc;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 16px;
+          font-size: 12px;
+          color: white;
+          margin-left: 5px;
+        }
+      }
+    }
+
+    &-info {
+      border-bottom: 1px solid $bd-user;
+      background-color: $bgcl-main;
+
+      .activity-date {
+        @include font-status();
+        color: $tcl-first;
+      }
+
+      .activity-description, .activity-detail {
+        @include font-description();
+        color: $tcl-second;
+      }
+    }
+  }
+}

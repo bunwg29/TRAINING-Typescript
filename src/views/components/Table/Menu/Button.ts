@@ -4,7 +4,7 @@ export class Button {
   private ButtonContent(): HTMLElement {
     const button = document.createElement('button');
     button.textContent = 'PAY DUES';
-    button.className = 'table-option-button';
+    button.className = 'menu-pay';
     return button;
   }
 
