@@ -3,9 +3,13 @@ import { Heading } from './Heading';
 import icons from '@/constant/icons';
 import { DOM } from '@/views/utils/DOM';
 import { Activity } from './Activity';
+import { checkboxEvent } from '@/helpers/checkboxEvent.helpers';
+import { showInfoEvent } from '@/helpers/showInfo.helpers';
 
 type StatusType = 'active' | 'payment';
-
+/**
+ * - Contain class name and date data to config return data and display
+ */
 interface StatusConfig {
   className: string;
   formatter?: (date: string) => string;
@@ -21,6 +25,9 @@ export class TableData {
   private readonly dom: DOM;
   private activity: Activity;
 
+  /**
+   * - Config classname for stylesheet different type of data
+   */
   private readonly statusConfigs: StatusConfigs = {
     active: {
       Active: { className: 'info-activity__active' },
@@ -47,6 +54,10 @@ export class TableData {
     this.activity = new Activity();
   }
 
+  /**
+   *
+   * @returns {HTMLElement} create table rely on data
+   */
   public createTable(): HTMLElement {
     const container = this.dom.div('table-data');
     container.appendChild(new Heading().render());
@@ -54,6 +65,10 @@ export class TableData {
     return container;
   }
 
+  /**
+   *
+   * @returns {HTMLElement} that create div user contain list-user
+   */
   private createTableBody(): HTMLElement {
     const usersContainer = this.dom.div('user');
     this.data.forEach(user => {
@@ -62,8 +77,14 @@ export class TableData {
     return usersContainer;
   }
 
+  /**
+   *
+   * @param user - that data get from api
+   * @returns {HTMLElement} create row rely data
+   */
   private createUserRow(user: UserResponse): HTMLElement {
     const listUser = this.dom.div('list-user');
+    listUser.setAttribute('data-user-id', `${user.id}`);
     const userInfo = this.dom.div('info');
 
     const elements = [
@@ -83,10 +104,13 @@ export class TableData {
     return listUser;
   }
 
+  /** -- START CREATE ELEMENT IN ROW -- */
   private createCheckbox(): HTMLElement {
     const checkbox = document.createElement('a');
     checkbox.className = 'checkbox';
-    checkbox.appendChild(this.dom.img('', icons.userNonCheckbox));
+    const img = this.dom.img('', icons.userNonCheckbox);
+    checkbox.appendChild(img);
+    checkboxEvent(checkbox, img);
     return checkbox;
   }
 
@@ -94,6 +118,7 @@ export class TableData {
     const showInfo = document.createElement('a');
     showInfo.className = 'showinfo';
     showInfo.appendChild(this.dom.img('', icons.showProfile));
+    showInfoEvent(showInfo);
     return showInfo;
   }
 
@@ -167,7 +192,9 @@ export class TableData {
   }
 
   private createViewMoreButton(): HTMLElement {
-    return this.dom.button('button-viewmore', 'View more');
+    const button = this.dom.button('button-viewmore', 'View more');
+    showInfoEvent(button);
+    return button;
   }
 
   private createAdditionSection(): HTMLElement {

@@ -3,7 +3,7 @@ import { instanceAxios } from '../api/setup';
 import { activityType, UsersModel } from '../models/users.model';
 
 export interface UserResponse {
-  id: number
+  id: number;
   firstname: string;
   lastname: string;
   email: string;
@@ -16,30 +16,44 @@ export interface UserResponse {
 }
 
 export class UserController {
-  constructor() {}
-
-  static async getAllUsers(): Promise<UserResponse[]> {
+  private static async fetchUsers(url: string): Promise<UserResponse[]> {
     try {
-      const url = endPoint.getAllUser(10);
       const res = await instanceAxios.get(url);
-      const userList = res.data.map((user: UserResponse): UsersModel => {
-        const newUser = new UsersModel(
-          user.firstname,
-          user.lastname,
-          user.email,
-          user.active_status,
-          user.last_login,
-          user.paid_status,
-          user.paid_day,
-          user.amount,
-          user.activity,
-        );
-        return newUser;
-      });
-      return userList;
+      return res.data.map((user: UserResponse) => new UsersModel(
+        user.id,
+        user.firstname,
+        user.lastname,
+        user.email,
+        user.active_status,
+        user.last_login,
+        user.paid_status,
+        user.paid_day,
+        user.amount,
+        user.activity
+      ));
     } catch (error) {
       console.error(error);
       return [];
     }
+  }
+
+  static getAllUsers(): Promise<UserResponse[]> {
+    const url = endPoint.getAllUser(10);
+    return this.fetchUsers(url);
+  }
+
+  static getPaidUser(): Promise<UserResponse[]> {
+    const url = endPoint.getUserType('Paid');
+    return this.fetchUsers(url);
+  }
+
+  static getUnpaid(): Promise<UserResponse[]> {
+    const url = endPoint.getUserType('Unpaid');
+    return this.fetchUsers(url);
+  }
+
+  static getOverdue(): Promise<UserResponse[]> {
+    const url = endPoint.getUserType('Overdue');
+    return this.fetchUsers(url);
   }
 }

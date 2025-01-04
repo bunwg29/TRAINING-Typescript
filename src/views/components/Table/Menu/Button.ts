@@ -1,3 +1,5 @@
+import { payEvent } from "@/helpers/payEvent.helpers";
+
 export class Button {
   constructor() {}
 
@@ -5,6 +7,7 @@ export class Button {
     const button = document.createElement('button');
     button.textContent = 'PAY DUES';
     button.className = 'menu-pay';
+    payEvent(button);
     return button;
   }
 

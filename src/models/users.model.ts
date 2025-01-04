@@ -5,7 +5,7 @@ export type activityType = {
 };
 
 export class UsersModel {
-
+  id: number
   firstname: string;
   lastname: string;
   email: string;
@@ -17,6 +17,7 @@ export class UsersModel {
   activity: activityType[];
 
   constructor(
+    id: number,
     firstname: string,
     lastname: string,
     email: string,
@@ -27,6 +28,7 @@ export class UsersModel {
     amount: string,
     activity: activityType[],
   ) {
+    this.id = id;
     this.firstname = firstname;
     this.lastname = lastname;
     this.email = email;

@@ -1,8 +1,8 @@
 import { UserController, UserResponse } from "@/controllers/users.controller";
 import { UserView } from "./UserView";
 
-export class Home extends UserView {
+export class Unpaid extends UserView {
   protected async fetchData(): Promise<UserResponse[]> {
-    return await UserController.getAllUsers();
+    return await UserController.getUnpaid();
   }
 }
