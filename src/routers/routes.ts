@@ -1,11 +1,17 @@
+import { Paid } from "@/views/pages/Paid";
 import { Default } from "../views/layouts/Default";
 import { Home } from "../views/pages/Home";
+import { Unpaid } from "@/views/pages/Unpaid";
+import { Overdue } from "@/views/pages/Overdue";
 /**
  * Define the type of the component
  */
 const components = {
   Default,
-  Home
+  Home,
+  Paid,
+  Unpaid,
+  Overdue
 } as const;
  
 type ComponentType = (typeof components)[keyof typeof components];
@@ -31,7 +37,9 @@ export const routes: Route[] = [
     component: components.Default,
     children: [
       createRoute("/", components.Home),
-      // createRoute("/paid", components.Test2),
+      createRoute("/paid", components.Paid),
+      createRoute("/unpaid", components.Unpaid),
+      createRoute("/overdue", components.Overdue),
     ],
   },
 ];
