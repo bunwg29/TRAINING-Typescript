@@ -1,8 +1,8 @@
 export const endPoint = {
 
   // [GET] all user type
-  getAllUser(limit?: 10): string {
-    return `/user_data?_limit=${limit}`;
+  getAllUser(page: number): string {
+    return `/user_data?_page=${page}`;
   },
 
   /**
@@ -10,8 +10,8 @@ export const endPoint = {
    * @param userType - this is type of user that we want to get data like: paid, unpaid, overdue user.
    * @returns 
    */
-  getUserType(userType: string): string {
-    return `/user_data?paid_status=${userType}`;
+  getUserType(userType: string, page: number): string {
+    return `/user_data?paid_status=${userType}&_page=${page}`;
   }, 
 
   /**

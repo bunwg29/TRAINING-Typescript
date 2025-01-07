@@ -1,8 +1,7 @@
-import { UserController, UserResponse } from "@/controllers/users.controller";
-import { UserView } from "./UserView";
+import { UserView } from './UserView';
 
 export class Overdue extends UserView {
-  protected async fetchData(): Promise<UserResponse[]> {
-    return await UserController.getOverdue();
+  constructor(page?: string) {
+    super("overdue", page);
   }
 }
