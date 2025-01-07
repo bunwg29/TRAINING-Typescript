@@ -2,6 +2,9 @@ import { endPoint } from '../api/endPoint';
 import { instanceAxios } from '../api/setup';
 import { activityType, UsersModel } from '../models/users.model';
 
+/**
+ * - Define interface of type response
+ */
 export interface UserResponse {
   id: number;
   firstname: string;
@@ -16,10 +19,17 @@ export interface UserResponse {
 }
 
 export class UserController {
-  private static async fetchUsers(url: string): Promise<UserResponse[]> {
+  
+  /**
+   * 
+   * @param url - The url on path that define type of user to get data
+   * @returns - user data and total items of this data
+   */
+  private static async fetchUsers(url: string): Promise<{ users: UserResponse[], totalCount: number }> {
     try {
       const res = await instanceAxios.get(url);
-      return res.data.map((user: UserResponse) => new UsersModel(
+      const totalCount = parseInt(res.headers['x-total-count']);
+      const users = res.data.map((user: UserResponse) => new UsersModel(
         user.id,
         user.firstname,
         user.lastname,
@@ -31,29 +41,36 @@ export class UserController {
         user.amount,
         user.activity
       ));
+      return { users, totalCount };
     } catch (error) {
       console.error(error);
-      return [];
+      return { users: [], totalCount: 0 };
     }
   }
-
-  static getAllUsers(): Promise<UserResponse[]> {
-    const url = endPoint.getAllUser(10);
+  
+  /**
+   * 
+   * @param pages - pages number to put to the endpoint order to call API
+   * @returns - user data
+   */
+  
+  static getAllUsers(pages: number): Promise<{ users: UserResponse[], totalCount: number }> {
+    const url = endPoint.getAllUser(pages);
     return this.fetchUsers(url);
   }
 
-  static getPaidUser(): Promise<UserResponse[]> {
-    const url = endPoint.getUserType('Paid');
+  static getPaidUser(page: number): Promise<{ users: UserResponse[], totalCount: number }> {
+    const url = endPoint.getUserType('Paid', page);
     return this.fetchUsers(url);
   }
 
-  static getUnpaid(): Promise<UserResponse[]> {
-    const url = endPoint.getUserType('Unpaid');
+  static getUnpaid(page: number): Promise<{ users: UserResponse[], totalCount: number }> {
+    const url = endPoint.getUserType('Unpaid', page);
     return this.fetchUsers(url);
   }
 
-  static getOverdue(): Promise<UserResponse[]> {
-    const url = endPoint.getUserType('Overdue');
+  static getOverdue(page: number): Promise<{ users: UserResponse[], totalCount: number }> {
+    const url = endPoint.getUserType('Overdue', page);
     return this.fetchUsers(url);
   }
 }

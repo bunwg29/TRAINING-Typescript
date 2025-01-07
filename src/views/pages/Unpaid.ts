@@ -1,8 +1,7 @@
-import { UserController, UserResponse } from "@/controllers/users.controller";
-import { UserView } from "./UserView";
+import { UserView } from './UserView';
 
 export class Unpaid extends UserView {
-  protected async fetchData(): Promise<UserResponse[]> {
-    return await UserController.getUnpaid();
+  constructor(page?: string) {
+    super("unpaid", page);
   }
 }

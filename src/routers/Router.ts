@@ -1,3 +1,4 @@
+import { getPageParam } from '@/helpers/getPageParam.helpers';
 import { routes, Route } from './routes';
 // This class will handle SPA router logic
 export class Router {
@@ -9,7 +10,7 @@ export class Router {
       window.dispatchEvent(new CustomEvent('urlChanged')),
     );
     window.addEventListener('urlChanged', () => this.routeMatchContent());
-    this.pushState(window.location.pathname);
+    Router.pushState(window.location.pathname);
     this.clickPushState();
   }
 
@@ -17,21 +18,52 @@ export class Router {
    *
    * @param pathUrl - URL path to push to pushState to handle not reload page
    */
-  public pushState(pathUrl: string) {
+  public static pushState(pathUrl: string) {
     window.history.pushState(null, '', pathUrl);
     window.dispatchEvent(new CustomEvent('urlChanged'));
   }
+  
 
   /**
    * Define the route match content
    */
-  private routeMatchContent() {
+  private async routeMatchContent() {
     const app = document.getElementById('app');
 
-    const { childComponent } = this.getRoutes();
-    app?.replaceChildren(childComponent as HTMLElement);
+    const { childComponent } = await this.getRoutes();
+    if (childComponent) {
+      app?.replaceChildren(childComponent);
+    }
   }
 
+  /**
+   *
+   * @returns particular components class - Return the component that match the URL path
+   */
+  private async getRoutes() {
+    const urlPath = window.location.pathname;
+  
+    for (const route of this.flatRoutes()) {
+      const { path, component, parentComponent } = route;
+  
+      if (this.correctPath(urlPath, path)) {
+        const pageParam = getPageParam();
+        const componentInstance = new component(pageParam);
+        const childComponent = await componentInstance.render();
+  
+        if (parentComponent) {
+          const parentInstance = new parentComponent();
+          return {
+            childComponent: await parentInstance.render(childComponent),
+            path,
+          };
+        }
+        return { childComponent, path };
+      }
+    }
+    return { childComponent: null, path: null };
+  }
+  
   /**
    *
    * @returns Route[] - Return the flat routes that defined in the routes.ts
@@ -47,25 +79,9 @@ export class Router {
     );
   }
 
-  /**
-   *
-   * @returns particular components class - Return the component that match the URL path
-   */
-  private getRoutes() {
-    const urlPath = window.location.pathname;
-    for (const route of this.flatRoutes()) {
-      const { component, parentComponent } = route;
-      if (route.path === urlPath) {
-        const childComponent = new component().render();
-        if (parentComponent) {
-          return {
-            childComponent: new parentComponent().render(childComponent as HTMLElement),
-          };
-        }
-        return { childComponent };
-      }
-    }
-    return { childComponent: null };
+  private correctPath(url: string, path: string): boolean {
+    const urlPath = url.split('?')[0];
+    return urlPath === path;
   }
 
   /**
@@ -77,7 +93,7 @@ export class Router {
       if (target.tagName === 'A' && target.getAttribute('href')) {
         event.preventDefault();
         const href = target.getAttribute('href');
-        if (href) this.pushState(href);
+        if (href) Router.pushState(href);
       }
     });
   }
