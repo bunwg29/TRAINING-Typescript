@@ -1,0 +1,39 @@
+@use '../abstracts/' as *;
+@use '../base/' as *;
+
+footer {
+  @include flexStyle(right, center, row);
+  gap: 5%;
+  padding: 1em;
+  background-color: #f4f2ff;
+  box-shadow: 2px 2px 5px 0px $bs-menu;
+  border-radius: 0px 0px 10px 10px;
+  .pagination-info {
+    &__content {
+      @include font($primary-font, $fs-medium, $fw-button);
+      color: $tcl-first;
+    }
+
+    .items-per-page {
+      border: none;
+      background-color: transparent;
+      color: $tcl-first;
+      @include font($primary-font, $fs-medium, $fw-button);
+    }
+  }
+
+  .pagination-pages {
+    @include font($primary-font, $fs-medium, $fw-button);
+    color: $tcl-first;
+  }
+
+  .pagination-controls > * {
+    border: none;
+    background-color: transparent;
+  }
+
+  .pagination-controls {
+    @include flexStyle(none, none, row);
+    gap: 20px;
+  }
+}
