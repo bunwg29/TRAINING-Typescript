@@ -1,0 +1,73 @@
+@use '../abstracts/' as *;
+@use '../base/' as *;
+
+.filter-active {
+   width: 120px;
+   padding: 20px;
+
+   @include position(absolute, 50px, null, null, -5px);
+   @include flexStyle(none, none, column);
+   gap: 10px;
+   @include bg-color($tcl-button);
+   z-index: 100;
+   @include border-radius(10px);
+   @include box-shadow(2px, 2px, 5px, 0px, $bs-menu);
+
+   .sort,
+   .users {
+      @include flexStyle(none, none, column);
+      gap: 10px;
+
+      > * {
+         @include flexStyle(none, none, column);
+         gap: 5px;
+      }
+   }
+
+   label {
+      @include font-description();
+      @include flexStyle(space-between, none, row);
+
+      input[type="radio"] {
+         appearance: none;
+         -webkit-appearance: none;
+         @include size(16px);
+         border: 2px solid #ccc;
+         @include border-radius(50%);
+         margin-right: 10px;
+         cursor: pointer;
+         position: relative;
+
+         &:checked {
+         border-color: #7854f7;
+         background-color: #7854f7;
+
+         &::before {
+            content: '';
+            display: block;
+            @include size(5px);
+            @include border-radius(50%);
+            background-color: white;
+            @include position(absolute, 50%, null, null, 50%);
+            transform: translate(-50%, -50%);
+         }
+         }
+      }
+   }
+
+   li:hover {
+      @include bg-color($bgcl-inactiveStatus);
+      @include border-radius(5px);
+   }
+
+   .sort-title,
+   .users-title {
+      text-align: left;
+      @include font($primary-font, $fs-small, $fw-first);
+      color: $tcl-first;
+   }
+}
+
+.hidden {
+   display: none;
+}

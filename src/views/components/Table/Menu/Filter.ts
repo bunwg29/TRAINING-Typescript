@@ -1,5 +1,7 @@
 import { DOM } from '@/views/utils/DOM';
 import icons from '../../../../constant/icons';
+import { FilterContent } from './FilterContent';
+import { filterBtnEvent } from '@/helpers/filterEvent.helpers';
 
 export class Filter {
   private readonly dom: DOM;
@@ -15,7 +17,8 @@ export class Filter {
     const img = this.dom.img('filter-icon', icons.filter);
     const p = this.dom.p('Filter');
 
-    button.append(img, p);
+    button.append(img, p, new FilterContent().render());
+    filterBtnEvent(button);
     return button;
   }
 
