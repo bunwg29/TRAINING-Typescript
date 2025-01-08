@@ -3,6 +3,7 @@ import { TableData } from '../components/Table/TableData/TableData';
 import { Pagination } from '../components/Pagination/Pagination';
 import { UserController } from '@/controllers/users.controller';
 import { FilterManager } from '@/services/FilterManager.services';
+import { SearchManager } from '@/services/SearchManager.services';
 
 type FetchType = 'all' | 'paid' | 'unpaid' | 'overdue';
 
@@ -14,20 +15,28 @@ export abstract class UserView {
   private totalCount: number;
   protected data: UserResponse[] = [];
   private filterManager: FilterManager;
-  private unsubscribe: (() => void) | null = null;
+  private searchManager: SearchManager;
+  private unsubscribeFilter: (() => void) | null = null;
+  private unsubscribeSearch: (() => void) | null = null;
 
   constructor(fetchType: FetchType, page?: string) {
+    // Initialize containers
     this.container = document.createElement('div');
     this.tableContainer = document.createElement('div');
     this.tableContainer.className = 'table-container';
     this.container.appendChild(this.tableContainer);
+
+    // Initialize properties
     this.fetchType = fetchType;
     this.page = page ? parseInt(page, 10) : 1;
     this.totalCount = 0;
+
+    // Initialize managers
     this.filterManager = FilterManager.getInstance();
+    this.searchManager = SearchManager.getInstance();
   }
 
-  private async fetchData(): Promise<UserResponse[]> {
+  private async fetchData(): Promise<{users: UserResponse[], totalCount: number}> {
     let response;
     switch (this.fetchType) {
       case 'paid':
@@ -42,27 +51,63 @@ export abstract class UserView {
       default:
         response = await UserController.getAllUsers(this.page);
     }
-    this.totalCount = response.totalCount;
-    this.data = response.users;
-    return response.users;
+    return response;
   }
 
   private async handleData() {
-    const users = await this.fetchData();
-    this.data = users;
-    this.renderFilteredData();
-    this.renderPagination();
+    try {
+      // Fetch and store data
+      const response = await this.fetchData();
+      this.data = response.users;
+      this.totalCount = response.totalCount;
+
+      // Initial render
+      this.renderProcessedData();
+      this.renderPagination();
+
+      // Subscribe to changes
+      this.setupSubscriptions();
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error appropriately (e.g., show error message to user)
+    }
+  }
+
+  private setupSubscriptions() {
+    // Unsubscribe from existing subscriptions
+    this.cleanupSubscriptions();
 
     // Subscribe to filter changes
-    this.unsubscribe = this.filterManager.subscribe(() => {
-      this.renderFilteredData();
+    this.unsubscribeFilter = this.filterManager.subscribe(() => {
+      this.renderProcessedData();
+    });
+
+    // Subscribe to search changes
+    this.unsubscribeSearch = this.searchManager.subscribe(() => {
+      this.renderProcessedData();
     });
   }
 
-  private renderFilteredData() {
-    const filteredUsers = this.filterManager.filterData(this.data);
-    this.tableContainer.innerHTML = '';
-    this.initTable(filteredUsers);
+  private renderProcessedData() {
+    try {
+      // Apply both filter and search
+      let processedData = this.data;
+      
+      // Apply filter
+      processedData = this.filterManager.filterData(processedData);
+      
+      // Apply search
+      if (this.searchManager.getSearchTerm()) {
+        processedData = this.searchManager.searchData(processedData);
+      }
+
+      // Update table
+      this.tableContainer.innerHTML = '';
+      this.initTable(processedData);
+    } catch (error) {
+      console.error('Error processing data:', error);
+      // Handle error appropriately
+    }
   }
 
   private initTable(users: UserResponse[]) {
@@ -76,14 +121,23 @@ export abstract class UserView {
     this.container.appendChild(pagination.render());
   }
 
+  private cleanupSubscriptions() {
+    if (this.unsubscribeFilter) {
+      this.unsubscribeFilter();
+      this.unsubscribeFilter = null;
+    }
+    if (this.unsubscribeSearch) {
+      this.unsubscribeSearch();
+      this.unsubscribeSearch = null;
+    }
+  }
+
   public async render() {
     await this.handleData();
     return this.container;
   }
 
   public destroy() {
-    if (this.unsubscribe) {
-      this.unsubscribe();
-    }
+    this.cleanupSubscriptions();
   }
 }
