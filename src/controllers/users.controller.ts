@@ -47,6 +47,28 @@ export class UserController {
       return { users: [], totalCount: 0 };
     }
   }
+
+  public static async getUserData(userId: string): Promise<{users: UserResponse[]}> {
+    try {
+      const res = await instanceAxios.get(`/user_data/${userId}`);
+      const users = res.data.map((user: UserResponse) => new UsersModel(
+        user.id,
+        user.firstname,
+        user.lastname,
+        user.email,
+        user.active_status,
+        user.last_login,
+        user.paid_status,
+        user.paid_day,
+        user.amount,
+        user.activity
+      ));
+      return users;
+    } catch (error) {
+      console.log(error)
+      return {users: []};
+    }
+  }
   
   /**
    * 

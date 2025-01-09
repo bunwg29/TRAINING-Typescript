@@ -5,6 +5,8 @@ import { DOM } from '@/views/utils/DOM';
 import { Activity } from './Activity';
 import { checkboxEvent } from '@/helpers/checkboxEvent.helpers';
 import { showInfoEvent } from '@/helpers/showInfo.helpers';
+import { AdditionOption } from './AdditionOption';
+import { toggleHiddenClass } from '@/helpers/additionOptionEvent.helpers';
 
 type StatusType = 'active' | 'payment';
 /**
@@ -202,7 +204,12 @@ export class TableData {
     const link = document.createElement('a');
     link.className = 'viewmore';
     link.appendChild(this.dom.img('', icons.viewMoreOption));
-    container.appendChild(link);
+    const additionOption = new AdditionOption().render();
+    container.addEventListener('click', () => {
+      toggleHiddenClass(additionOption);
+    });
+    container.append(link, additionOption);
+
     return container;
   }
 
