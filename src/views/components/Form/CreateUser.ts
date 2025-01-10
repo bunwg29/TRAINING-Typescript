@@ -2,6 +2,7 @@ import { UserController } from '@/controllers/users.controller';
 import { getFormData } from '@/helpers/formData.helpers';
 import { showNotification } from '@/helpers/showNotification.helpers';
 import { BaseUserForm } from './BaseUserForm';
+import { Router } from '@/routers/Router';
 
 export class CreateUser extends BaseUserForm {
   constructor() {
@@ -26,13 +27,16 @@ export class CreateUser extends BaseUserForm {
       .then(response => {
         if (response) {
           showNotification('User added successfully');
+          Router.pushState('/');
         } else {
           showNotification('Failed to add user');
+          Router.pushState('/');
         }
       })
       .catch(error => {
         console.error('Error during user addition:', error);
         showNotification('Error during user addition');
+        Router.pushState('/');
       });
   }
 

@@ -93,10 +93,10 @@
 
   .activity {
     display: none;
-    background-color: #fff;
+    background-color: $bgcl-item-profile;
     border-radius: 0 0 8px 8px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px $bs-form;
 
     &-header, &-info {
       display: grid;
@@ -119,12 +119,12 @@
           display: inline-block;
           width: 16px;
           height: 16px;
-          background-color: #ccc;
+          background-color: $bgcl-ccc;
           border-radius: 50%;
           text-align: center;
           line-height: 16px;
           font-size: 12px;
-          color: white;
+          color: $bgcl-item-profile;
           margin-left: 5px;
         }
       }

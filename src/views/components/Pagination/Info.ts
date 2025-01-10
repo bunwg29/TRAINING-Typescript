@@ -1,4 +1,4 @@
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 const optionValue = ['10', '20', '50'];
 
 export class Info {

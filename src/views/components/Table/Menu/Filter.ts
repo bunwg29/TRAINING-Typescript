@@ -1,4 +1,4 @@
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 import icons from '../../../../constant/icons';
 import { FilterContent } from './FilterContent';
 import { filterBtnEvent } from '@/helpers/filterEvent.helpers';

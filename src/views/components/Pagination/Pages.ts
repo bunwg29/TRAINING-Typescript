@@ -1,4 +1,4 @@
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 
 /**
  * - This class contains number of item of data, numerical order of data

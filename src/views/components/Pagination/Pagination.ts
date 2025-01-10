@@ -1,4 +1,3 @@
-import { DOM } from '@/views/utils/DOM';
 import { Info } from './Info';
 import { Pages } from './Pages';
 import { Control } from './Control';
@@ -7,13 +6,11 @@ import { Control } from './Control';
  * -This class will combine Control.ts, Info.ts, Pages.ts into Pagination component
  */
 export class Pagination {
-  private dom: DOM;
   private totalPages: number;
   private currentPage: number;
   private totalCount: number;
 
   constructor(totalPages: number, currentPage: number, totalCount: number) {
-    this.dom = new DOM();
     this.totalPages = totalPages;
     this.currentPage = currentPage;
     this.totalCount = totalCount;

@@ -43,6 +43,7 @@ export class UserController {
       ));
       return { users, totalCount };
     } catch (error) {
+      showNotification('Wait a minute, and reload page');
       console.error('Error fetching users:', error);
       return { users: [], totalCount: 0 };
     }
@@ -55,7 +56,7 @@ export class UserController {
    */
   public static async addUser(user: UserResponse): Promise<UserResponse | null> {
     try {
-      const res = await instanceAxios.post('/user_data', user);
+      const res = await instanceAxios.post(endPoint.getAll(), user);
       return res.data as UserResponse;
     } catch (error) {
       console.error('Error adding user:', error);
@@ -87,6 +88,7 @@ export class UserController {
         includeActivity ? user.activity : []
       );
     } catch (error) {
+      showNotification('Wait a minute, and reload page');
       console.error('Error fetching user by ID:', error);
       return null;
     }
@@ -98,8 +100,7 @@ export class UserController {
    * @param includeActivity - Whether to include activity data (default is false)
    */
   public static getUserById(userId: number, includeActivity = false): Promise<UsersModel | null> {
-    const url = `/user_data/${userId}`;
-    return this.fetchUserById(url, includeActivity);
+    return this.fetchUserById(endPoint.getUserById(userId), includeActivity);
   }
 
   /**
@@ -110,7 +111,7 @@ export class UserController {
    */
   public static async updateUser(userId: number, userData: Partial<UserResponse>): Promise<UserResponse | null> {
     try {
-      const res = await instanceAxios.patch(`/user_data/${userId}`, userData);
+      const res = await instanceAxios.patch(endPoint.getUserById(userId), userData);
       showNotification('User updated successfully');
       return res.data as UserResponse;
     } catch (error) {
@@ -126,13 +127,14 @@ export class UserController {
    */
   public static async getTotalPaidAmount(): Promise<number> {
     try {
-      const res = await instanceAxios.get('/user_data/?paid_status=Paid');
+      const res = await instanceAxios.get(endPoint.getPaidAmount());
       const users = res.data as UserResponse[];
       return users.reduce((sum, user) => {
         const amount = parseFloat(user.amount.replace('$', '').replace(/,/g, ''));
         return sum + (isNaN(amount) ? 0 : amount);
       }, 0);
     } catch (error) {
+      showNotification('Wait a minute, and reload page');
       console.error('Error calculating total paid amount:', error);
       return 0;
     }

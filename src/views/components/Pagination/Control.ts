@@ -1,6 +1,6 @@
 import icons from '@/constant/icons';
 import { BtnPagination } from '@/helpers/pagination.helpers';
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 
 /**
  * - This class contain button for pre or next page
@@ -24,7 +24,7 @@ export class Control {
     const button = document.createElement('button');
     button.className = className;
     button.appendChild(img);
-    BtnPagination(button, this.totalPages); 
+    BtnPagination(button, this.totalPages);
     return button;
   }
 

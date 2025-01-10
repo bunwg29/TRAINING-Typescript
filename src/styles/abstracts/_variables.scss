@@ -34,6 +34,12 @@ $bgcl-unpaidStatus: #ffeccc;
 
 $bgcl-buttonPay: #6d5bd0;
 
+$bgcl-label: #7854f7;
+
+$bgcl-ccc: #ccc;
+
+$bgcl-toast: rgb(59, 130, 246);
+
 // Variables for text-color
 $tcl-first: #6e6893;
 
@@ -51,7 +57,8 @@ $tcl-unpaid-status: #965e00;
 
 // Variables for box-shadow
 $bs-menu: #00000033;
-
+$bs-form: rgba(0,0,0,0.1);
 // Variables for outline border
 $bd-color: #c6c2de;
 $bd-user: #d9d5ec;
+$bd-cl-first: #7854f7;

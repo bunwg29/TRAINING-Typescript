@@ -1,7 +1,7 @@
 import { UserResponse } from '@/controllers/users.controller';
 import { Heading } from './Heading';
 import icons from '@/constant/icons';
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 import { Activity } from './Activity';
 import { checkboxEvent } from '@/helpers/checkboxEvent.helpers';
 import { showInfoEvent } from '@/helpers/showInfo.helpers';

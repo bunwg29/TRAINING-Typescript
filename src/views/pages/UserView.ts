@@ -4,6 +4,7 @@ import { Pagination } from '../components/Pagination/Pagination';
 import { UserController } from '@/controllers/users.controller';
 import { FilterManager } from '@/services/FilterManager.services';
 import { SearchManager } from '@/services/SearchManager.services';
+import { showNotification } from '@/helpers/showNotification.helpers';
 
 type FetchType = 'all' | 'paid' | 'unpaid' | 'overdue';
 
@@ -69,7 +70,7 @@ export abstract class UserView {
       this.setupSubscriptions();
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle error appropriately (e.g., show error message to user)
+      showNotification('Wait and reload');
     }
   }
 
@@ -106,7 +107,7 @@ export abstract class UserView {
       this.initTable(processedData);
     } catch (error) {
       console.error('Error processing data:', error);
-      // Handle error appropriately
+      showNotification('Wait and reload');
     }
   }
 

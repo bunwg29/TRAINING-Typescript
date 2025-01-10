@@ -5,7 +5,7 @@ footer {
   @include flexStyle(right, center, row);
   gap: 5%;
   padding: 1em;
-  background-color: #f4f2ff;
+  background-color: $bgcl-main;
   box-shadow: 2px 2px 5px 0px $bs-menu;
   border-radius: 0px 0px 10px 10px;
   .pagination-info {

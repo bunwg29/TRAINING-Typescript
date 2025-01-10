@@ -53,8 +53,6 @@ export class DOM {
     return th;
   }
 
-
-
   public className(element: HTMLElement, className: string) {
     element.className = className;
   }
