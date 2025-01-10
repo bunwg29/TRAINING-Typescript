@@ -6,14 +6,56 @@
   @include padding(10px);
   @include bg-color($bgcl-main);
 
+  @include tablet {
+    padding: 8px;
+  }
+
+  @include mobile {
+    display: none; // Hide on mobile as it takes too much space
+  }
+
   & > * {
     @include font($primary-font, $fs-small, $fw-button);
     color: $tcl-first;
   }
 
-  .checkboxMenu { flex: 0.1; }
-  .name { flex: 0.2; }
-  .status { flex: 0.37; }
-  .paymentStatus { flex: 0.25; }
-  .amount { flex: 0.15; }
+  .checkboxMenu { 
+    flex: 0.1; 
+    
+    @include tablet {
+      flex: 0.05;
+    }
+  }
+
+  .name { 
+    flex: 0.2;
+
+    @include tablet {
+      flex: 0.45;
+    }
+  }
+
+  .status { 
+    flex: 0.37;
+
+    @include tablet {
+      flex: 0.5;
+    }
+  }
+
+  .paymentStatus { 
+    flex: 0.25;
+
+    @include tablet {
+      flex: 0.7;
+    }
+  }
+
+  .amount { 
+    flex: 0.15;
+
+    @include tablet {
+      flex: 0.2;
+    }
+  }
 }

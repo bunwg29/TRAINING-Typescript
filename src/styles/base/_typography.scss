@@ -28,3 +28,11 @@
 @mixin font-status() {
   @include font($primary-font, $fs-small, $fw-second);
 }
+
+@mixin tablet {
+  @media (max-width: 1024px) { @content; }
+}
+
+@mixin mobile {
+  @media (max-width: 767px) { @content; }
+}

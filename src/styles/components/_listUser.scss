@@ -1,5 +1,6 @@
 @use "../base" as *;
 @use '../abstracts/' as *;
+
 .user {
   .list-user {
     border-top: solid 1px $bd-user;
@@ -25,6 +26,46 @@
       .info-amount { @include flex-item(0.06); }
       .button-viewmore { @include flex-item(0.08); }
 
+      // Tablet styles
+      @include tablet {
+        flex-wrap: wrap;
+        gap: 10px;
+
+        .checkbox { @include flex-item(0.05); }
+        .showinfo { display: none; }
+        .info-name { @include flex-item(0.45); }
+        .info-activity { @include flex-item(0.5); }
+        .info-payment { @include flex-item(0.7); }
+        .info-amount { @include flex-item(0.2); }
+        .button-viewmore { @include flex-item(0.1); }
+      }
+
+      // Mobile styles
+      @include mobile {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+
+        .checkbox, .showinfo, .info-name, .info-activity,
+        .info-payment, .info-amount, .button-viewmore {
+          width: 100%;
+          flex: 1;
+        }
+
+        .checkbox { 
+          order: 1;
+          width: auto;
+        }
+        .info-name { order: 2; }
+        .info-activity { order: 3; }
+        .info-payment { order: 4; }
+        .info-amount { order: 5; }
+        .button-viewmore { 
+          order: 6;
+          align-self: flex-end;
+        }
+      }
+
       .info-name {
         @include flexStyle(center, left, column);
         gap: 5px;
@@ -37,6 +78,10 @@
         &__email {
           @include font($primary-font, $fs-medium, $fw-first);
           color: $tcl-first;
+
+          @include mobile {
+            font-size: $fs-small;
+          }
         }
       }
 
@@ -49,6 +94,16 @@
         border-radius: 10px;
         @include font-status();
         color: $text-color;
+
+        @include tablet {
+          width: auto;
+          min-width: 80px;
+        }
+
+        @include mobile {
+          width: auto;
+          padding: 4px 8px;
+        }
       }
 
       .info-activity, .info-payment {
@@ -57,6 +112,14 @@
         &__paid { @include status-style($bgcl-paidStatus, $tcl-paid-status, 15%); }
         &__unpaid { @include status-style($bgcl-unpaidStatus, $tcl-unpaid-status, 20%); }
         &__overdue { @include status-style($bgcl-overdueStatus, $tcl-overdue-status, 23%); }
+
+        @include mobile {
+          width: 100%;
+          
+          &__login p, &__day {
+            margin-top: 5px;
+          }
+        }
 
         .status-dot {
           @include flexStyle(none, center, column);
@@ -77,6 +140,12 @@
           @include font($primary-font, $fs-medium, $fw-first);
           color: $tcl-first;
         }
+
+        @include mobile {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
       }
 
       .button-viewmore {
@@ -84,10 +153,6 @@
         border: none;
         background-color: transparent;
       }
-    }
-
-    .addition {
-      position: relative;
     }
   }
 
@@ -103,6 +168,17 @@
       grid-template-columns: 100px 1fr 2fr;
       padding: 15px;
       font-size: 0.9em;
+
+      @include tablet {
+        grid-template-columns: 90px 1fr 1.5fr;
+        padding: 12px;
+      }
+
+      @include mobile {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 10px;
+      }
     }
 
     &-header {
@@ -142,6 +218,10 @@
       .activity-description, .activity-detail {
         @include font-description();
         color: $tcl-second;
+
+        @include mobile {
+          font-size: $fs-small;
+        }
       }
     }
   }
