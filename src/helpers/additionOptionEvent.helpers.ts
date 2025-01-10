@@ -1,5 +1,6 @@
 import { instanceAxios } from '@/api/setup';
 import { showNotification } from './showNotification.helpers';
+import { Router } from '@/routers/Router';
 
 /**
  * Toggles the 'hidden' class on the given element.
@@ -20,7 +21,11 @@ export function addClickEventHandler(optionDiv: HTMLElement): void {
       const listUserElement = target.closest('.list-user') as HTMLElement | null;
       if (!listUserElement) return;
 
-      const userId = listUserElement.getAttribute('data-user-id');
+      const userId: string | null = listUserElement.getAttribute('data-user-id');
+      if (!userId) {
+        showNotification("User ID not found");
+        return;
+      }
       
       // Handle different button actions
       switch (target.className) {
@@ -28,16 +33,14 @@ export function addClickEventHandler(optionDiv: HTMLElement): void {
           await handleActivateUser(listUserElement, userId);
           break;
         case 'addition-option-edit':
-          // TODO: Handle edit action
+          editProfile(userId);
           console.log('Edit clicked for user:', userId);
           break;
         case 'addition-option-viewProfile':
-          // TODO: Handle view profile action
-          console.log('View Profile clicked for user:', userId);
+          viewProfile(userId);
           break;
         case 'addition-option-deleteUser':
-          // TODO: Handle delete action
-          console.log('Delete clicked for user:', userId);
+          deleteUser(userId);
           break;
       }
     }
@@ -76,5 +79,27 @@ async function handleActivateUser(listUserElement: HTMLElement, userId: string |
     }
   } else {
     showNotification("User already exist");
+  }
+}
+
+const viewProfile = (userId: string) => {
+  Router.pushState(`/view-profile/${userId}`);
+}
+
+const editProfile = (userId: string) => {
+  Router.pushState(`/edit-profile/${userId}`);
+}
+
+const deleteUser = async (userId: string) => {
+  try {
+    const res = await instanceAxios.delete(`/user_data/${userId}`);
+    if (res.status === 200) {
+      showNotification("Delete successfully");
+    } else {
+      showNotification("Error when delete data");
+    }
+  } catch (error) {
+    console.log("Delete user error: " + error);
+    showNotification("Error server");
   }
 }

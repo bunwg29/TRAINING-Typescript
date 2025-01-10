@@ -21,7 +21,7 @@ export const payEvent = (button: HTMLElement) => {
     }
     try {
       await instanceAxios.patch(`/user_data/${userId}`, {
-        paid_status: 'Overdue',
+        paid_status: 'Paid',
       });
       showNotification('Payment status updated successfully');
       setTimeout(() => {
