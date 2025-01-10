@@ -25,6 +25,9 @@
       .info-payment { @include flex-item(0.33); }
       .info-amount { @include flex-item(0.06); }
       .button-viewmore { @include flex-item(0.08); }
+      .addition {
+        position: relative;
+      }
 
       // Tablet styles
       @include tablet {

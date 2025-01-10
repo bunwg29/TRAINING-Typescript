@@ -6,30 +6,38 @@
 }
 
 .addition-option {
-   @include position (absolute, 25px, 0px, 0px, -8em);
-   @include size (8em, 10em);
+   // Đặt tất cả declarations cơ bản lên đầu
+   @include position(absolute, 25px, 0px, 0px, -8em);
+   @include size(8em, 10em);
    padding: 5px;
    z-index: 100;
-   @include bg-color ($bgcl-item-profile);
-   @include flexStyle (space-around, none, column);
+   @include bg-color($bgcl-item-profile);
+   @include flexStyle(space-around, none, column);
    gap: 5px;
-   @include border-radius (10px);
+   @include border-radius(10px);
    box-shadow: 0px 0px 5px 2px $bs-menu;
+
+   // Đặt media queries và các nested rules sau declarations
+   @media screen and (max-width: 768px) { 
+      left: auto; 
+      right: -8em;
+   }
 
    button {
       padding: 5px;
-      @include flexStyle (none, left, row);
+      @include flexStyle(none, left, row);
       @include font-description();
       border: none;
       border-radius: 5px;
       background-color: transparent;
+
+      &:hover {
+         background-color: $bgcl-inactiveStatus;
+      }
    }
 
-   button:hover {
-      background-color: $bgcl-inactiveStatus;
-   }
-
-   .addition-option-edit  .addition-option-viewProfile {
+   .addition-option-edit,
+   .addition-option-viewProfile {
       color: $tcl-second;
    }
 
@@ -46,6 +54,5 @@
       height: 1px;
       width: 100%;
       background-color: $bgcl-inactiveStatus;
-   };
-
+   }
 }
