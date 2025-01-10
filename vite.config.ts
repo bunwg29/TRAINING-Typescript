@@ -7,7 +7,7 @@ export default defineConfig({
    root: '.',
    build: {
       target: "esnext",
-      outDir: '../dist'
+      outDir: 'dist'
    },
 
    resolve: {
