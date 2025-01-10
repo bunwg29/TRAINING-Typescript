@@ -63,11 +63,14 @@ export const deleteUser = async (userId: string) => {
     const response = await instanceAxios.delete(endPoint.getUserById(userId));
     if (isSuccessfulResponse(response)) {
       showNotification('Delete successfully');
+      Router.pushState('/');
     } else {
       showNotification('Error when delete data');
+      Router.pushState('/');
     }
   } catch (error) {
     showNotification('Wait and reload');
     handleError('Error server', error);
+    Router.pushState('/');
   }
 };
