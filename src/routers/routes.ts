@@ -3,6 +3,9 @@ import { Default } from "../views/layouts/Default";
 import { Home } from "../views/pages/Home";
 import { Unpaid } from "@/views/pages/Unpaid";
 import { Overdue } from "@/views/pages/Overdue";
+import { CreateUser } from "@/views/components/Form/CreateUser";
+import { ViewProfile } from "@/views/components/Form/ViewProfile";
+import { EditUser } from "@/views/components/Form/EditUser";
 /**
  * Define the type of the component
  */
@@ -11,7 +14,10 @@ const components = {
   Home,
   Paid,
   Unpaid,
-  Overdue
+  Overdue,
+  CreateUser,
+  ViewProfile,
+  EditUser
 } as const;
  
 type ComponentType = (typeof components)[keyof typeof components];
@@ -40,6 +46,9 @@ export const routes: Route[] = [
       createRoute("/paid", components.Paid),
       createRoute("/unpaid", components.Unpaid),
       createRoute("/overdue", components.Overdue),
+      createRoute("/create-user", components.CreateUser),
+      createRoute("/view-profile/:id", components.ViewProfile),
+      createRoute("/edit-profile/:id", components.EditUser),
     ],
   },
 ];

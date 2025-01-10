@@ -44,11 +44,18 @@
     }
   }
 
-  &-pay {
+  &-right {
+    gap: 3em;
+    @include flexStyle(space-between, center, row);
+  }
+  &-pay, &-create {
+    width: 7em;
+    height: 2.5em;
     @include padding(1%);
     @include font($primary-font, $fs-big, $fw-button);
     @include border-radius(10px);
     @include bg-color($bgcl-buttonPay, $bgcl-item-profile);
     border: none;
   }
+
 }

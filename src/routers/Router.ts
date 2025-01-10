@@ -1,4 +1,4 @@
-import { getPageParam } from '@/helpers/getPageParam.helpers';
+import { getPageParam } from '@/helpers/getParams.helpers';
 import { routes, Route } from './routes';
 // This class will handle SPA router logic
 export class Router {
@@ -22,7 +22,6 @@ export class Router {
     window.history.pushState(null, '', pathUrl);
     window.dispatchEvent(new CustomEvent('urlChanged'));
   }
-  
 
   /**
    * Define the route match content
@@ -42,17 +41,18 @@ export class Router {
    */
   private async getRoutes() {
     const urlPath = window.location.pathname;
-  
+
     for (const route of this.flatRoutes()) {
       const { path, component, parentComponent } = route;
-  
+
       if (this.correctPath(urlPath, path)) {
-        const pageParam = getPageParam();
-        const componentInstance = new component(pageParam);
+        const params = this.extractParams(urlPath, path);
+        const paramValue = params.id || getPageParam();
+        const componentInstance = new component(paramValue);
         const childComponent = await componentInstance.render();
-  
+
         if (parentComponent) {
-          const parentInstance = new parentComponent();
+          const parentInstance = new parentComponent(paramValue);
           return {
             childComponent: await parentInstance.render(childComponent),
             path,
@@ -63,7 +63,7 @@ export class Router {
     }
     return { childComponent: null, path: null };
   }
-  
+
   /**
    *
    * @returns Route[] - Return the flat routes that defined in the routes.ts
@@ -80,8 +80,15 @@ export class Router {
   }
 
   private correctPath(url: string, path: string): boolean {
-    const urlPath = url.split('?')[0];
-    return urlPath === path;
+    const urlSegments = url.split('/');
+    const pathSegments = path.split('/');
+
+    if (urlSegments.length !== pathSegments.length) return false;
+
+    return pathSegments.every((segment, i) => {
+      if (segment.startsWith(':')) return true;
+      return segment === urlSegments[i];
+    });
   }
 
   /**
@@ -96,5 +103,20 @@ export class Router {
         if (href) Router.pushState(href);
       }
     });
+  }
+
+  private extractParams(url: string, path: string): Record<string, string> {
+    const urlSegments = url.split('/');
+    const pathSegments = path.split('/');
+    const params: Record<string, string> = {};
+
+    pathSegments.forEach((segment, i) => {
+      if (segment.startsWith(':')) {
+        const paramName = segment.slice(1);
+        params[paramName] = urlSegments[i];
+      }
+    });
+
+    return params;
   }
 }

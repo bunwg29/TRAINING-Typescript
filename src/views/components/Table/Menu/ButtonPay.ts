@@ -1,6 +1,6 @@
 import { payEvent } from "@/helpers/payEvent.helpers";
 
-export class Button {
+export class ButtonPay {
   constructor() {}
 
   private ButtonContent(): HTMLElement {
