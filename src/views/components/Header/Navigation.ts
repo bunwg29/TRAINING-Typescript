@@ -1,10 +1,10 @@
-import { DOM } from '../../utils/DOM';
+import { DOM } from '../../utils/DOM.utils';
 import { Amount } from './Amount';
 import { NAV_CONTENT } from '../../../constant/navContent';
 
 export class Navigation {
   DOM = new DOM();
-  constructor() {}
+  constructor() { }
 
   private NavigationContent(): HTMLElement {
     const nav = document.createElement('nav');
@@ -17,7 +17,7 @@ export class Navigation {
   private divNav(): HTMLElement {
     const div = this.DOM.div('navigation');
     div.appendChild(this.NavigationContent());
-    div.appendChild(new Amount(900).render());
+    div.appendChild(new Amount().render());
     return div;
   }
 

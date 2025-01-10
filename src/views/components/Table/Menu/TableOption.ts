@@ -1,4 +1,4 @@
-import { DOM } from '../../../utils/DOM';
+import { DOM } from '../../../utils/DOM.utils';
 import { ButtonCreate } from './ButtonCreate';
 import { ButtonPay } from './ButtonPay';
 import { Filter } from './Filter';

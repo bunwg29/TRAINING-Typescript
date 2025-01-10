@@ -1,4 +1,4 @@
-import { DOM } from '../../utils/DOM';
+import { DOM } from '../../utils/DOM.utils';
 import { UserController } from '@/controllers/users.controller';
 
 export class Amount {

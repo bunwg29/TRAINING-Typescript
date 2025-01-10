@@ -1,5 +1,5 @@
 import icons from '@/constant/icons';
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 
 interface HeaderItem {
   className: string;

@@ -2,7 +2,8 @@ import { UserController } from '@/controllers/users.controller';
 import { getFormData } from '@/helpers/formData.helpers';
 import { showNotification } from '@/helpers/showNotification.helpers';
 import { BaseUserForm } from './BaseUserForm';
-import { AmountUtils } from '@/helpers/AmountUtils.helpers';
+import { AmountUtils } from '@/views/utils/Amount.utils';
+import { Router } from '@/routers/Router';
 
 export class EditUser extends BaseUserForm {
   private userId: string;
@@ -31,22 +32,24 @@ export class EditUser extends BaseUserForm {
     const submitButton = this.createButton('submit', 'Update', 'submit-btn');
     formActions.appendChild(submitButton);
     form.appendChild(formActions);
-    
+
     form.addEventListener('submit', this.handleSubmit);
   }
 
   private handleSubmit = async (event: Event) => {
     event.preventDefault();
-    
+
     try {
       const formData = getFormData();
       const response = await UserController.updateUser(parseInt(this.userId), formData);
       if (response) {
         showNotification('User updated successfully');
+        Router.pushState('/');
       }
     } catch (error) {
       console.error('Error updating user:', error);
       showNotification('Error updating user');
+      Router.pushState('/');
     }
   }
 

@@ -39,8 +39,8 @@
          position: relative;
 
          &:checked {
-         border-color: #7854f7;
-         background-color: #7854f7;
+         border-color: $bd-cl-first;
+         background-color: $bgcl-label;
 
          &::before {
             content: '';

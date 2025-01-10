@@ -1,6 +1,6 @@
 import icons from '@/constant/icons';
 import { SearchManager } from '@/services/SearchManager.services';
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 
 export class Input {
   private readonly dom: DOM;
@@ -19,7 +19,7 @@ export class Input {
 
     this.debounceTimeout = setTimeout(() => {
       this.searchManager.setSearchTerm(input.value);
-    }, 300); 
+    }, 300);
   }
 
   private InputContent(): HTMLElement {

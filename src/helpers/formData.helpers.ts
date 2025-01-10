@@ -1,5 +1,5 @@
 import { UserResponse } from '@/controllers/users.controller';
-import { AmountUtils } from './AmountUtils.helpers';
+import { AmountUtils } from '../views/utils/Amount.utils';
 
 export const generateId = (): number => {
   return Math.floor(100000 + Math.random() * 900000);
@@ -22,7 +22,7 @@ export const formatAmount = (amount: string): string => {
 export const getFormData = (): UserResponse => {
   const form = document.getElementById('userProfileForm') as HTMLFormElement;
   const formData = new FormData(form);
-  
+
   const amount = formData.get('amount') as string;
 
   return {

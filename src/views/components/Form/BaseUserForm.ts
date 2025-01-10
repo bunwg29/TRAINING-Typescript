@@ -1,6 +1,6 @@
-import { DOM } from '@/views/utils/DOM';
+import { DOM } from '@/views/utils/DOM.utils';
 import { UsersModel } from '@/models/users.model';
-import { AmountUtils } from '@/helpers/AmountUtils.helpers';
+import { AmountUtils } from '@/views/utils/Amount.utils';
 
 export abstract class BaseUserForm {
   protected readonly dom: DOM;
@@ -22,7 +22,7 @@ export abstract class BaseUserForm {
     input.id = id;
     input.name = name;
     input.placeholder = placeholder;
-    
+
     if (type === 'number' && name === 'amount') {
       input.step = '10';
       input.min = '0';
@@ -82,9 +82,9 @@ export abstract class BaseUserForm {
       { label: 'First Name', type: 'text', id: 'firstname', placeholder: 'Enter first name' },
       { label: 'Last Name', type: 'text', id: 'lastname', placeholder: 'Enter last name' },
       { label: 'Email', type: 'email', id: 'email', placeholder: 'Enter email' },
-      { 
-        label: 'Active Status', 
-        type: 'select', 
+      {
+        label: 'Active Status',
+        type: 'select',
         id: 'active_status',
         options: [
           { value: 'Active', text: 'Active' },
@@ -92,9 +92,9 @@ export abstract class BaseUserForm {
         ]
       },
       { label: 'Last Login', type: 'date', id: 'last_login', placeholder: 'Last login date' },
-      { 
-        label: 'Paid Status', 
-        type: 'select', 
+      {
+        label: 'Paid Status',
+        type: 'select',
         id: 'paid_status',
         options: [
           { value: 'Paid', text: 'Paid' },
@@ -109,7 +109,7 @@ export abstract class BaseUserForm {
       const element = field.type === 'select'
         ? this.createSelect(field.id, field.id, field.options!)
         : this.createInput(field.type, field.id, field.id, field.placeholder!);
-      
+
       form.appendChild(this.createFormGroup(field.label, element));
     });
   }
