@@ -1,0 +1,1 @@
+export const optionValue = ['10', '20', '50'];

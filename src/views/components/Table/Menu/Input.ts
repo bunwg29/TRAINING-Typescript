@@ -1,6 +1,6 @@
 import icons from '@/constant/icons';
-import { SearchManager } from '@/services/SearchManager.services';
-import { DOM } from '@/views/utils/DOM.utils';
+import { SearchManager } from '@/services/SearchManager';
+import { DOM } from '@/views/utils/DOM';
 
 export class Input {
   private readonly dom: DOM;

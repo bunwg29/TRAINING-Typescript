@@ -1,5 +1,5 @@
-import { DOM } from '@/views/utils/DOM.utils';
-const optionValue = ['10', '20', '50'];
+import { optionValue } from '@/constant/limitItemPage';
+import { DOM } from '@/views/utils/DOM';
 
 export class Info {
   private readonly dom: DOM;

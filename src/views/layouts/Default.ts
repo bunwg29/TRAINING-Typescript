@@ -1,4 +1,5 @@
-import { Header } from '../components';
+
+import { Header } from '../components/Header/Header';
 import { TableOption } from '../components/Table/Menu/TableOption';
 
 // This class is a layout that will be used to render the default layout of the application.

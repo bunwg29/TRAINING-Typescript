@@ -1,6 +1,6 @@
 import icons from '@/constant/icons';
-import { BtnPagination } from '@/helpers/pagination.helpers';
-import { DOM } from '@/views/utils/DOM.utils';
+import { BtnPagination } from '@/helpers/pagination';
+import { DOM } from '@/views/utils/DOM';
 
 /**
  * - This class contain button for pre or next page

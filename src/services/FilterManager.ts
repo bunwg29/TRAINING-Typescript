@@ -1,9 +1,5 @@
-import { UserResponse } from '@/controllers/users.controller';
-
-export interface FilterState {
-  sortBy: string;
-  userStatus: string;
-}
+import { FilterState } from "@/types/Filter";
+import { UserResponse } from "@/types/UserResponse";
 
 /**
  * - That manage filter data state
@@ -17,7 +13,7 @@ export class FilterManager {
   };
   private subscribers: ((state: FilterState) => void)[] = [];
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): FilterManager {
     if (!FilterManager.instance) {
@@ -53,7 +49,7 @@ export class FilterManager {
     this.subscribers.forEach(callback => callback(this.state));
   }
 
-  public filterData<T extends UserResponse>(data: T[]): T[] {
+  public filterData(data: UserResponse[]): UserResponse[] {
     let filteredData = [...data];
 
     // Filter by user status

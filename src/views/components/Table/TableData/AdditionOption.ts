@@ -1,10 +1,10 @@
-import { addClickEventHandler } from "@/helpers/additionOptionEvent.helpers";
+import { addClickEventHandler } from "@/helpers/additionOptionEvent";
 
 /**
  * Class representing a set of additional options with various actions.
  */
 export class AdditionOption {
-  constructor() {}
+  constructor() { }
 
   /**
    * Creates the main div element containing the additional options and appends buttons and a separator line.

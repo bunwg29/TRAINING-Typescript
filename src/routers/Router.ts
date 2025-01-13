@@ -1,5 +1,6 @@
-import { getPageParam } from '@/helpers/getParams.helpers';
-import { routes, Route } from './routes';
+import { getPageParam } from '@/helpers/getParams';
+import { routes } from './routes';
+import { Route } from '@/types/RouterType';
 // This class will handle SPA router logic
 export class Router {
   /**

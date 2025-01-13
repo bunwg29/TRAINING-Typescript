@@ -1,0 +1,1 @@
+export const paths = ['/', '/paid', '/unpaid', '/overdue'];

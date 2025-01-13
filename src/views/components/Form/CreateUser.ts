@@ -1,6 +1,6 @@
-import { UserController } from '@/controllers/users.controller';
-import { getFormData } from '@/helpers/formData.helpers';
-import { showNotification } from '@/helpers/showNotification.helpers';
+import { UserController } from '@/controllers/users';
+import { getFormData } from '@/helpers/formData';
+import { showNotification } from '@/helpers/showNotification';
 import { BaseUserForm } from './BaseUserForm';
 import { Router } from '@/routers/Router';
 
@@ -15,27 +15,27 @@ export class CreateUser extends BaseUserForm {
     const submitButton = this.createButton('submit', 'Submit', 'submit-btn');
     formActions.appendChild(submitButton);
     form.appendChild(formActions);
-    
+
     form.addEventListener('submit', this.handleSubmit.bind(this));
   }
 
   private handleSubmit(event: Event) {
     event.preventDefault();
     const userData = getFormData();
-    
+
     UserController.addUser(userData)
       .then(response => {
         if (response) {
-          showNotification('User added successfully');
+          showNotification('userAdded');
           Router.pushState('/');
         } else {
-          showNotification('Failed to add user');
+          showNotification('error');
           Router.pushState('/');
         }
       })
       .catch(error => {
         console.error('Error during user addition:', error);
-        showNotification('Error during user addition');
+        showNotification('error');
         Router.pushState('/');
       });
   }

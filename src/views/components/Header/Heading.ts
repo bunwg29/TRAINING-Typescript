@@ -1,4 +1,4 @@
-import { DOM } from '../../utils/DOM.utils';
+import { DOM } from '../../utils/DOM';
 
 export class Heading {
   DOM = new DOM();

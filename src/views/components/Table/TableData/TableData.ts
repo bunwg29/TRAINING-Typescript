@@ -1,27 +1,13 @@
-import { UserResponse } from '@/controllers/users.controller';
 import { Heading } from './Heading';
 import icons from '@/constant/icons';
-import { DOM } from '@/views/utils/DOM.utils';
+import { DOM } from '@/views/utils/DOM';
 import { Activity } from './Activity';
-import { checkboxEvent } from '@/helpers/checkboxEvent.helpers';
-import { showInfoEvent } from '@/helpers/showInfo.helpers';
+import { checkboxEvent } from '@/helpers/checkboxEvent';
+import { showInfoEvent } from '@/helpers/showInfo';
 import { AdditionOption } from './AdditionOption';
-import { toggleHiddenClass } from '@/helpers/additionOptionEvent.helpers';
-
-type StatusType = 'active' | 'payment';
-/**
- * - Contain class name and date data to config return data and display
- */
-interface StatusConfig {
-  className: string;
-  formatter?: (date: string) => string;
-}
-
-interface StatusConfigs {
-  [key: string]: {
-    [key: string]: StatusConfig;
-  };
-}
+import { toggleHiddenClass } from '@/helpers/additionOptionEvent';
+import { UserResponse } from '@/types/UserResponse';
+import { StatusConfig, StatusConfigs, StatusType } from '@/types/Filter';
 
 export class TableData {
   private readonly dom: DOM;

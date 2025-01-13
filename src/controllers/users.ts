@@ -1,23 +1,8 @@
-import { showNotification } from '@/helpers/showNotification.helpers';
+import { showNotification } from '@/helpers/showNotification';
 import { endPoint } from '../api/endPoint';
 import { instanceAxios } from '../api/setup';
-import { activityType, UsersModel } from '../models/users.model';
-
-/**
- * Interface defining the structure of the user response data
- */
-export interface UserResponse {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  active_status: string;
-  last_login: string;
-  paid_status: string;
-  paid_day: string;
-  amount: string;
-  activity: activityType[];
-}
+import { UsersModel } from '../models/users';
+import { UserResponse } from '@/types/UserResponse';
 
 export class UserController {
   /**
@@ -43,7 +28,7 @@ export class UserController {
       ));
       return { users, totalCount };
     } catch (error) {
-      showNotification('Wait a minute, and reload page');
+      showNotification('error');
       console.error('Error fetching users:', error);
       return { users: [], totalCount: 0 };
     }
@@ -60,7 +45,7 @@ export class UserController {
       return res.data as UserResponse;
     } catch (error) {
       console.error('Error adding user:', error);
-      showNotification('Error adding user');
+      showNotification('error');
       return null;
     }
   }
@@ -88,7 +73,7 @@ export class UserController {
         includeActivity ? user.activity : []
       );
     } catch (error) {
-      showNotification('Wait a minute, and reload page');
+      showNotification('loadError');
       console.error('Error fetching user by ID:', error);
       return null;
     }
@@ -112,11 +97,11 @@ export class UserController {
   public static async updateUser(userId: number, userData: Partial<UserResponse>): Promise<UserResponse | null> {
     try {
       const res = await instanceAxios.patch(endPoint.getUserById(userId), userData);
-      showNotification('User updated successfully');
+      showNotification('userUpdated');
       return res.data as UserResponse;
     } catch (error) {
       console.error('Error updating user:', error);
-      showNotification('Error updating user');
+      showNotification('error');
       return null;
     }
   }
@@ -134,7 +119,7 @@ export class UserController {
         return sum + (isNaN(amount) ? 0 : amount);
       }, 0);
     } catch (error) {
-      showNotification('Wait a minute, and reload page');
+      showNotification('loadError');
       console.error('Error calculating total paid amount:', error);
       return 0;
     }

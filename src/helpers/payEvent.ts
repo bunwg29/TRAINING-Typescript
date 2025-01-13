@@ -1,5 +1,5 @@
 import { instanceAxios } from '@/api/setup';
-import { showNotification } from './showNotification.helpers';
+import { showNotification } from './showNotification';
 import { endPoint } from '@/api/endPoint';
 
 /**
@@ -18,7 +18,7 @@ export const payEvent = (button: HTMLElement) => {
     const userId = getUserIdFromURL();
 
     if (!userId) {
-      showNotification('User ID not found in the URL');
+      showNotification('notUser');
       return;
     }
 
@@ -26,7 +26,7 @@ export const payEvent = (button: HTMLElement) => {
     const paidStatus = userRow?.querySelector('.info-payment__paid');
 
     if (paidStatus) {
-      showNotification('Payment has already been processed');
+      showNotification('paymentExist');
       return;
     }
 
@@ -34,13 +34,13 @@ export const payEvent = (button: HTMLElement) => {
       await instanceAxios.patch(endPoint.getUserById(userId), {
         paid_status: 'Paid',
       });
-      showNotification('Payment status updated successfully');
+      showNotification('paymentUpdate');
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     } catch (error) {
       console.error('Error updating payment status:', error);
-      showNotification('Failed to update payment status');
+      showNotification('paymentFailed');
     }
   });
 };

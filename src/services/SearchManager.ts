@@ -1,11 +1,11 @@
-import { UserResponse } from '@/controllers/users.controller';
+import { UserResponse } from "@/types/UserResponse";
 
 export class SearchManager {
   private static instance: SearchManager;
   private searchTerm: string = '';
   private subscribers: ((searchTerm: string) => void)[] = [];
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): SearchManager {
     if (!SearchManager.instance) {
@@ -34,7 +34,7 @@ export class SearchManager {
     this.subscribers.forEach(callback => callback(this.searchTerm));
   }
 
-  public searchData<T extends UserResponse>(data: T[]): T[] {
+  public searchData(data: UserResponse[]): UserResponse[] {
     if (!this.searchTerm.trim()) return data;
 
     const searchTerm = this.searchTerm.toLowerCase().trim();

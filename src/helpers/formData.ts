@@ -1,5 +1,5 @@
-import { UserResponse } from '@/controllers/users.controller';
-import { AmountUtils } from '../views/utils/Amount.utils';
+import { UserResponse } from '@/types/UserResponse';
+import { AmountUtils } from '../views/utils/Amount';
 
 export const generateId = (): number => {
   return Math.floor(100000 + Math.random() * 900000);

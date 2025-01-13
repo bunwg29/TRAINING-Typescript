@@ -1,17 +1,11 @@
-import { showNotification } from './showNotification.helpers';
+import { ButtonActions } from '@/constant/buttonContent';
+import { showNotification } from './showNotification';
 import {
   deleteUser,
   editProfile,
   handleActivateUser,
   viewProfile,
-} from '@/services/CRUD.services';
-
-const ButtonActions = {
-  ACTIVATE: 'addition-option-activeUser',
-  EDIT: 'addition-option-edit',
-  VIEW_PROFILE: 'addition-option-viewProfile',
-  DELETE: 'addition-option-deleteUser',
-};
+} from '@/services/CRUD';
 
 export function toggleHiddenClass(element: HTMLElement): void {
   element.classList.toggle('hidden');
@@ -24,7 +18,7 @@ export function addClickEventHandler(optionDiv: HTMLElement): void {
 
     const userId = getUserIdFromElement(target);
     if (!userId) {
-      showNotification('User ID not found');
+      showNotification('notUser');
       return;
     }
 

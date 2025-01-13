@@ -1,8 +1,8 @@
-import { UserController } from '@/controllers/users.controller';
-import { getFormData } from '@/helpers/formData.helpers';
-import { showNotification } from '@/helpers/showNotification.helpers';
+import { UserController } from '@/controllers/users';
+import { getFormData } from '@/helpers/formData';
+import { showNotification } from '@/helpers/showNotification';
 import { BaseUserForm } from './BaseUserForm';
-import { AmountUtils } from '@/views/utils/Amount.utils';
+import { AmountUtils } from '@/views/utils/Amount';
 import { Router } from '@/routers/Router';
 
 export class EditUser extends BaseUserForm {
@@ -43,12 +43,12 @@ export class EditUser extends BaseUserForm {
       const formData = getFormData();
       const response = await UserController.updateUser(parseInt(this.userId), formData);
       if (response) {
-        showNotification('User updated successfully');
+        showNotification('userUpdated');
         Router.pushState('/');
       }
     } catch (error) {
       console.error('Error updating user:', error);
-      showNotification('Error updating user');
+      showNotification('error');
       Router.pushState('/');
     }
   }

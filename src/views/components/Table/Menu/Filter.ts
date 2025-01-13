@@ -1,7 +1,7 @@
-import { DOM } from '@/views/utils/DOM.utils';
+import { DOM } from '@/views/utils/DOM';
 import icons from '../../../../constant/icons';
 import { FilterContent } from './FilterContent';
-import { filterBtnEvent } from '@/helpers/filterEvent.helpers';
+import { filterBtnEvent } from '@/helpers/filterEvent';
 
 export class Filter {
   private readonly dom: DOM;
