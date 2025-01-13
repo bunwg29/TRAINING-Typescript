@@ -1,4 +1,4 @@
-import { FilterManager } from '@/services/FilterManager.services';
+import { FilterManager } from '@/services/FilterManager';
 
 interface FilterOption {
   value: string;

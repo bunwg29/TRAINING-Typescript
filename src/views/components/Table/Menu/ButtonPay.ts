@@ -1,4 +1,4 @@
-import { payEvent } from "@/helpers/payEvent.helpers";
+import { payEvent } from "@/helpers/payEvent";
 
 export class ButtonPay {
   constructor() {}

@@ -1,6 +1,6 @@
-import { DOM } from '@/views/utils/DOM.utils';
-import { UsersModel } from '@/models/users.model';
-import { AmountUtils } from '@/views/utils/Amount.utils';
+import { DOM } from '@/views/utils/DOM';
+import { UsersModel } from '@/models/users';
+import { AmountUtils } from '@/views/utils/Amount';
 
 export abstract class BaseUserForm {
   protected readonly dom: DOM;

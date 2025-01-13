@@ -1,10 +1,10 @@
-import { showNotification } from './showNotification.helpers';
+import { showNotification } from './showNotification';
 import {
   deleteUser,
   editProfile,
   handleActivateUser,
   viewProfile,
-} from '@/services/CRUD.services';
+} from '@/services/CRUD';
 
 const ButtonActions = {
   ACTIVATE: 'addition-option-activeUser',

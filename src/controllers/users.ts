@@ -1,7 +1,7 @@
-import { showNotification } from '@/helpers/showNotification.helpers';
+import { showNotification } from '@/helpers/showNotification';
 import { endPoint } from '../api/endPoint';
 import { instanceAxios } from '../api/setup';
-import { activityType, UsersModel } from '../models/users.model';
+import { activityType, UsersModel } from '../models/users';
 
 /**
  * Interface defining the structure of the user response data

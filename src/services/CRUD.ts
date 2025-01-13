@@ -1,6 +1,6 @@
 import { endPoint } from '@/api/endPoint';
 import { instanceAxios } from '@/api/setup';
-import { showNotification } from '@/helpers/showNotification.helpers';
+import { showNotification } from '@/helpers/showNotification';
 import { Router } from '@/routers/Router';
 
 export async function handleActivateUser(

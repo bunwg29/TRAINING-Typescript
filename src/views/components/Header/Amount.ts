@@ -1,5 +1,5 @@
-import { DOM } from '../../utils/DOM.utils';
-import { UserController } from '@/controllers/users.controller';
+import { DOM } from '../../utils/DOM';
+import { UserController } from '@/controllers/users';
 
 export class Amount {
   private amount: number;

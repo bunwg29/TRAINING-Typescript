@@ -1,5 +1,5 @@
-import { activityType } from '@/models/users.model';
-import { DOM } from '@/views/utils/DOM.utils';
+import { activityType } from '@/models/users';
+import { DOM } from '@/views/utils/DOM';
 
 interface ActivityHeaderConfig {
   readonly titles: string[];

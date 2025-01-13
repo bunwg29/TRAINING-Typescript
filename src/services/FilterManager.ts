@@ -1,4 +1,4 @@
-import { UserResponse } from '@/controllers/users.controller';
+import { UserResponse } from '@/controllers/users';
 
 export interface FilterState {
   sortBy: string;
@@ -17,7 +17,7 @@ export class FilterManager {
   };
   private subscribers: ((state: FilterState) => void)[] = [];
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): FilterManager {
     if (!FilterManager.instance) {
@@ -53,7 +53,7 @@ export class FilterManager {
     this.subscribers.forEach(callback => callback(this.state));
   }
 
-  public filterData<T extends UserResponse>(data: T[]): T[] {
+  public filterData(data: UserResponse[]): UserResponse[] {
     let filteredData = [...data];
 
     // Filter by user status

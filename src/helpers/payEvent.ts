@@ -1,5 +1,5 @@
 import { instanceAxios } from '@/api/setup';
-import { showNotification } from './showNotification.helpers';
+import { showNotification } from './showNotification';
 import { endPoint } from '@/api/endPoint';
 
 /**

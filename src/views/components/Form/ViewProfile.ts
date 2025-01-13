@@ -1,6 +1,6 @@
-import { UserController } from "@/controllers/users.controller";
+import { UserController } from "@/controllers/users";
 import { BaseUserForm } from "./BaseUserForm";
-import { AmountUtils } from "@/views/utils/Amount.utils";
+import { AmountUtils } from "@/views/utils/Amount";
 
 export class ViewProfile extends BaseUserForm {
   private userId: string;

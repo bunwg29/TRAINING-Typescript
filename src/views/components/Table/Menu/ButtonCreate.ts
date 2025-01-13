@@ -1,4 +1,4 @@
-import { createUserEvent } from "@/helpers/createUser.helpers";
+import { createUserEvent } from "@/helpers/createUser";
 
 export class ButtonCreate {
   constructor() {}

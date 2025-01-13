@@ -1,4 +1,4 @@
-import { DOM } from '../../utils/DOM.utils';
+import { DOM } from '../../utils/DOM';
 import { Amount } from './Amount';
 import { NAV_CONTENT } from '../../../constant/navContent';
 

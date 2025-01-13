@@ -1,11 +1,11 @@
-import { UserResponse } from '@/controllers/users.controller';
+import { UserResponse } from '@/controllers/users';
 
 export class SearchManager {
   private static instance: SearchManager;
   private searchTerm: string = '';
   private subscribers: ((searchTerm: string) => void)[] = [];
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): SearchManager {
     if (!SearchManager.instance) {

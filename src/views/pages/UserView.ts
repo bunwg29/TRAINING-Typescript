@@ -1,10 +1,10 @@
-import { UserResponse } from '../../controllers/users.controller';
+import { UserResponse } from '../../controllers/users';
 import { TableData } from '../components/Table/TableData/TableData';
 import { Pagination } from '../components/Pagination/Pagination';
-import { UserController } from '@/controllers/users.controller';
-import { FilterManager } from '@/services/FilterManager.services';
-import { SearchManager } from '@/services/SearchManager.services';
-import { showNotification } from '@/helpers/showNotification.helpers';
+import { UserController } from '@/controllers/users';
+import { FilterManager } from '@/services/FilterManager';
+import { SearchManager } from '@/services/SearchManager';
+import { showNotification } from '@/helpers/showNotification';
 
 type FetchType = 'all' | 'paid' | 'unpaid' | 'overdue';
 
@@ -37,7 +37,7 @@ export abstract class UserView {
     this.searchManager = SearchManager.getInstance();
   }
 
-  private async fetchData(): Promise<{users: UserResponse[], totalCount: number}> {
+  private async fetchData(): Promise<{ users: UserResponse[], totalCount: number }> {
     let response;
     switch (this.fetchType) {
       case 'paid':
@@ -93,10 +93,10 @@ export abstract class UserView {
     try {
       // Apply both filter and search
       let processedData = this.data;
-      
+
       // Apply filter
       processedData = this.filterManager.filterData(processedData);
-      
+
       // Apply search
       if (this.searchManager.getSearchTerm()) {
         processedData = this.searchManager.searchData(processedData);
