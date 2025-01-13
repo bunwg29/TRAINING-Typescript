@@ -1,29 +1,6 @@
 import icons from '@/constant/icons';
+import { HEADER_ITEMS } from '@/constant/tableHeader';
 import { DOM } from '@/views/utils/DOM';
-
-interface HeaderItem {
-  className: string;
-  content: string;
-}
-
-const HEADER_ITEMS: HeaderItem[] = [
-  {
-    className: 'name',
-    content: 'NAME',
-  },
-  {
-    className: 'status',
-    content: 'USER STATUS',
-  },
-  {
-    className: 'paymentStatus',
-    content: 'PAYMENT STATUS',
-  },
-  {
-    className: 'amount',
-    content: 'AMOUNT',
-  },
-];
 
 export class Heading {
   private readonly dom: DOM;

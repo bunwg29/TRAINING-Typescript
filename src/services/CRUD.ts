@@ -11,7 +11,7 @@ export async function handleActivateUser(
     .closest('.list-user')
     ?.querySelector('.info-activity__inactive');
   if (!statusElement) {
-    showNotification('Cannot find user status element');
+    showNotification('notUser');
     return;
   }
 
@@ -26,30 +26,16 @@ export async function handleActivateUser(
       );
       statusElement.textContent = '• Active';
     } else {
-      showNotification('Error when update data');
+      showNotification('saveError');
     }
   } catch (error) {
-    handleError('Error while activating user', error);
-    showNotification('Wait and reload');
+    console.log(error)
+    showNotification('networkError');
   }
 }
 
 export function isSuccessfulResponse(response: { status: number }): boolean {
   return response.status === 200;
-}
-
-export function handleError(
-  message: string,
-  error?: Error | string | unknown,
-): void {
-  if (error instanceof Error) {
-    console.error(message, error.message);
-  } else if (typeof error === 'string') {
-    console.error(message, error);
-  } else {
-    console.error(message, 'Unknown error');
-  }
-  showNotification(message);
 }
 
 export const viewProfile = (userId: string) =>
@@ -62,15 +48,15 @@ export const deleteUser = async (userId: string) => {
   try {
     const response = await instanceAxios.delete(endPoint.getUserById(userId));
     if (isSuccessfulResponse(response)) {
-      showNotification('Delete successfully');
+      showNotification('userDeleted');
       Router.pushState('/');
     } else {
-      showNotification('Error when delete data');
+      showNotification('networkError');
       Router.pushState('/');
     }
   } catch (error) {
-    showNotification('Wait and reload');
-    handleError('Error server', error);
+    console.log(error);
+    showNotification('networkError');
     Router.pushState('/');
   }
 };

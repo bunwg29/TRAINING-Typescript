@@ -1,4 +1,4 @@
-import { UserResponse } from '@/controllers/users';
+import { UserResponse } from "@/types/UserResponse";
 
 export class SearchManager {
   private static instance: SearchManager;
@@ -34,7 +34,7 @@ export class SearchManager {
     this.subscribers.forEach(callback => callback(this.searchTerm));
   }
 
-  public searchData<T extends UserResponse>(data: T[]): T[] {
+  public searchData(data: UserResponse[]): UserResponse[] {
     if (!this.searchTerm.trim()) return data;
 
     const searchTerm = this.searchTerm.toLowerCase().trim();

@@ -1,4 +1,4 @@
-import { UserResponse } from '@/controllers/users';
+import { UserResponse } from '@/types/UserResponse';
 import { AmountUtils } from '../views/utils/Amount';
 
 export const generateId = (): number => {

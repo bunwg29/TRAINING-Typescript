@@ -1,8 +1,4 @@
-export type activityType = {
-  date: string;
-  user_activity: string;
-  detail: string;
-};
+import { activityType } from "@/types/UserResponse";
 
 export class UsersModel {
   id: number

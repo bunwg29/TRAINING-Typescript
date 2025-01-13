@@ -1,4 +1,3 @@
-import { UserResponse } from '@/controllers/users';
 import { Heading } from './Heading';
 import icons from '@/constant/icons';
 import { DOM } from '@/views/utils/DOM';
@@ -7,21 +6,8 @@ import { checkboxEvent } from '@/helpers/checkboxEvent';
 import { showInfoEvent } from '@/helpers/showInfo';
 import { AdditionOption } from './AdditionOption';
 import { toggleHiddenClass } from '@/helpers/additionOptionEvent';
-
-type StatusType = 'active' | 'payment';
-/**
- * - Contain class name and date data to config return data and display
- */
-interface StatusConfig {
-  className: string;
-  formatter?: (date: string) => string;
-}
-
-interface StatusConfigs {
-  [key: string]: {
-    [key: string]: StatusConfig;
-  };
-}
+import { UserResponse } from '@/types/UserResponse';
+import { StatusConfig, StatusConfigs, StatusType } from '@/types/Filter';
 
 export class TableData {
   private readonly dom: DOM;

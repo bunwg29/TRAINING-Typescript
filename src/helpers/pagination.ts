@@ -1,8 +1,8 @@
+import { paths } from '@/constant/mainPath';
 import { Router } from '@/routers/Router';
 /**
  * This file will check path of basic route and get pages params to handle click at @/view/components/Pagination/Pagination.ts
  */
-const paths = ['/', '/paid', '/unpaid', '/overdue'];
 
 const isCorrectPath = (path: string): boolean => paths.includes(path);
 

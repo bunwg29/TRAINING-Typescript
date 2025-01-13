@@ -1,9 +1,5 @@
-import { UserResponse } from '@/controllers/users';
-
-export interface FilterState {
-  sortBy: string;
-  userStatus: string;
-}
+import { FilterState } from "@/types/Filter";
+import { UserResponse } from "@/types/UserResponse";
 
 /**
  * - That manage filter data state

@@ -43,12 +43,12 @@ export class EditUser extends BaseUserForm {
       const formData = getFormData();
       const response = await UserController.updateUser(parseInt(this.userId), formData);
       if (response) {
-        showNotification('User updated successfully');
+        showNotification('userUpdated');
         Router.pushState('/');
       }
     } catch (error) {
       console.error('Error updating user:', error);
-      showNotification('Error updating user');
+      showNotification('error');
       Router.pushState('/');
     }
   }

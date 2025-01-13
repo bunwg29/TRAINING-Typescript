@@ -1,3 +1,4 @@
+import { ButtonActions } from '@/constant/buttonContent';
 import { showNotification } from './showNotification';
 import {
   deleteUser,
@@ -5,13 +6,6 @@ import {
   handleActivateUser,
   viewProfile,
 } from '@/services/CRUD';
-
-const ButtonActions = {
-  ACTIVATE: 'addition-option-activeUser',
-  EDIT: 'addition-option-edit',
-  VIEW_PROFILE: 'addition-option-viewProfile',
-  DELETE: 'addition-option-deleteUser',
-};
 
 export function toggleHiddenClass(element: HTMLElement): void {
   element.classList.toggle('hidden');
@@ -24,7 +18,7 @@ export function addClickEventHandler(optionDiv: HTMLElement): void {
 
     const userId = getUserIdFromElement(target);
     if (!userId) {
-      showNotification('User ID not found');
+      showNotification('notUser');
       return;
     }
 

@@ -1,9 +1,6 @@
-import { activityType } from '@/models/users';
+import { ActivityHeaderConfig } from '@/types/Content';
+import { activityType } from '@/types/UserResponse';
 import { DOM } from '@/views/utils/DOM';
-
-interface ActivityHeaderConfig {
-  readonly titles: string[];
-}
 
 export class Activity {
   private readonly dom: DOM;

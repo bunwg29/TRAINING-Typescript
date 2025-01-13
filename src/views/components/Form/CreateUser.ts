@@ -26,16 +26,16 @@ export class CreateUser extends BaseUserForm {
     UserController.addUser(userData)
       .then(response => {
         if (response) {
-          showNotification('User added successfully');
+          showNotification('userAdded');
           Router.pushState('/');
         } else {
-          showNotification('Failed to add user');
+          showNotification('error');
           Router.pushState('/');
         }
       })
       .catch(error => {
         console.error('Error during user addition:', error);
-        showNotification('Error during user addition');
+        showNotification('error');
         Router.pushState('/');
       });
   }
